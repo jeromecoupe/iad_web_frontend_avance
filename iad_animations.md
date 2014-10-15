@@ -377,3 +377,7 @@ Exemple: `animation-play-state` et classes manipulées via JavaScript.
 - [Disney's 12 principles of animations](http://en.wikipedia.org/wiki/12_basic_principles_of_animation)
 - Google propose quelques conseils concernant les animations et les transitions dans son introduction au "Material Design": [animation](https://www.google.com/design/spec/animation/authentic-motion.html), [responsive interaction](https://www.google.com/design/spec/animation/responsive-interaction.html), [meaningful transitions](https://www.google.com/design/spec/animation/meaningful-transitions.html), [delightful details](https://www.google.com/design/spec/animation/delightful-details.html).
 - [All the right moves](http://vimeo.com/86821694): vidéo expliquant les interactions entre animations CSS et JavaScript par Val Head
+- [Alice in Videoland](http://rachelnabors.com/alice-in-videoland/book/): une petite histoire animée et quelques tutoriaux à la fin - par Rachel Nabors.
+- [Flashless animations](http://24ways.org/2012/flashless-animation/) - par Rachel Nabors sur 24ways
+- [How to Create Windows-8-like animations with CSS3 and jQuery](http://sarasoueidan.com/blog/windows8-animations/) - Par Sara Soueidan
+- [CSS Sprite Sheet Animations with steps()](http://blog.teamtreehouse.com/css-sprite-sheet-animations-steps) - par Guil Hernandez sur Treehouse
