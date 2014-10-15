@@ -32,11 +32,10 @@ Les transitions CSS sont souvent utilisées pour "lisser" les transitions entre 
 	transition-duration: .25s, .5s;
 	transition-delay: .1s, .2s;
 	transition-timing-function: linear, ease-in;
-}```ou￼￼
-```css
+}```ou```css
 .myElement
 {	transition: background-color .25s .1s linear,
-				  transform .5s .2s ease-in;
+                transform .5s .2s ease-in;
 }```
 
 **Note:** la propriété `transition-timing-function` peut également être exprimée avec des courbes de Bezier pour plus de précision. Lea Verou a réalisé un [outil en ligne](http://cubic-bezier.com/) vous permettant de les calculer et de les visualiser facilement. A voir aussi, [Caeser](http://matthewlein.com/ceaser/) par Matthew Lein.*Exercice: expérimenter avec les transitions en :hover*
@@ -83,7 +82,7 @@ Effectue une rotation. Les valeurs spécifiées peuvent être positives ou néga
 .myElement
 {
 	transform: rotate(45deg);
-	transform: rotate(2turns);
+	transform: rotate(2turn);
 }
 ```
 
