@@ -128,9 +128,9 @@ Nous pouvons également combiner différentes transformation en les chainant et 
 
 ### Transformations 3D
 
-La plupart des transformations 2D ont leur équivalent en 3D. L'une des notions les plus importantes à comprendre est celle de perspective. [Chris Coyier vous en donne un bon aperçu sur CSS Tricks](http://css-tricks.com/almanac/properties/p/perspective/).
+L'une des notions les plus importantes à comprendre est celle de perspective. [Chris Coyier vous en donne un bon aperçu sur CSS Tricks](http://css-tricks.com/almanac/properties/p/perspective/).
 
-En bref, la perspective est la distance la profondeur de l'axe Z, la distance entre un objet situé sur celui-ci et l'utilisateur. Ces valeurs peuvent aller de 1 à 1000. Plus ce chiffre est petit, plus la perspective est importante. Plus ce chiffre est grand, plus l'effet sera subtil.
+En bref, la perspective est la profondeur de l'axe Z, la distance entre un objet situé sur celui-ci et l'utilisateur. Ces valeurs peuvent aller de 1 à 1000. Plus ce chiffre est petit, plus la perspective est importante. Plus ce chiffre est grand, plus l'effet sera subtil.
 
 La perspective peut être spécifiées de deux façons:
 
@@ -152,18 +152,63 @@ Via la propriété `perspective` sur l'élément parent. Dans ce cas, cela affec
 }
 ```
 
-La propriété `transform-style` peut prendre les valeurs `flat`ou `preserve-3d`. La seconde valeur permet de gérer la position des éléments dans un espace 3D. Elle permet également d'étendre le contexte 3D à tous les descendants du parent auquel la `perpective` aura été appliquée.
+Attention, la perspective n'affecte que les enfants directs. Si vous devez utiliser la même perspective pour des éléments qui sont des descendants plus lointains, vous pouvez utiliser la propriété `transform-style` qui peut prendre les valeurs `flat`ou `preserve-3d`. La seconde valeur d'étendre le contexte 3D à tous les descendants du parent auquel la `perpective` aura été appliquée.
+
+[La plupart des transformations 2D ont leur équivalent en 3D](http://css-tricks.com/almanac/properties/t/transform/).
+
+```
+.myElement
+{
+	transform:rotateX(50deg);
+	transform:rotateY(50deg);
+	transform:rotateZ(50deg);
+}
+
+.myElement
+{
+	transform:translateX(50px);
+	transform:translateY(50px);
+	transform:translateZ(50px);
+}
+
+.myElement
+{
+	transform:scaleZ(200px);
+}
+```
+
+Il existe également des notations courtes qui requièrent des valeurs pour les trois dimensions:
+
+```
+.myElement
+{
+	transform:translate3d(x, y, z);
+	transform:scale3d(x, y, z);
+	transform:rotate3d(x, y, z, angle);
+}
+```
+
+Avec transform 3d, vous spécifiez simplement quels axes de rotation sont activés (valeurs 0 ou 1) et vous définissez ensuite l'angle à appliquer.
 
 Avec les transformations 3D, vous pouvez placer certains éléments de telle façon que leur "avant" ne fasse plus face à l'écran. Par exemple avec une rotation:
 
 ```css
-.flip
+.myElement
 {
   transform: rotateY(180deg);
 }
 ```
 
-La propriété `backface-visibility` permet de gérer la visibilité des faces d'un élément lorsqu'elles ne font pas face à l'écran. Les valeurs possible sont `visible` et `hidden`. La dernière est le plus souvent utilisée.
+Dans ce cas la propriété `backface-visibility` permet de gérer la visibilité des faces d'un élément lorsqu'elles ne font pas face à l'écran. Les valeurs possible sont `visible` et `hidden`.
+
+```css
+.myElement
+{
+	transform: rotateY(180deg);
+	backface-visibility:visible;
+	/*backface-visibility:hidden;*/
+}
+```
 
 *Exercice: expérimenter avec les transformation 3D, perspective et backface-visibility*
 
