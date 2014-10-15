@@ -6,11 +6,11 @@ Animations et transitions sont des propriétés relativement récentes et qui ne
 
 Pour différencier les propriétés CSS encore en développement de celles qui font partie des recommandations du W3C, les divers navigateurs ont utilisé des extensions propriétaires qui se placent devant les propriétés CSS. Aujourd'hui, les choses ont changées et [les navigateurs utilisent d'avantage des flags](http://demosthenes.info/blog/217/CSS-Vendor-Prefixes-and-Flags).
 
-Des outils comme [prefixr](http://prefixr.com/) ou Autoprefixer pour [Grunt](@TODO) ou [Gulp](@TODO) peuvent vous aider à être certain de ne rien oublier. Des ressources comme [caniuse](http://caniuse.com/) et [html5please](http://html5please.com/) vous donneront quantités d'informations précieuses.
-- `-moz-`: Firefox et autres navigateurs basés sur Geko- `-webkit-`: Safari et autre navigateurs Webkit (Chrome)- `-khtml-`: Konqueror- `-o-`: Opera- `-ms-`: MicrosoftCertains navigateurs ne supportent tout simplement pas ces propriétés. Il est donc important de prévoir des alternatives au cas où. Une librairie telle que [Modernizr](@TODO) vous permettra de détecter le support de ces propriétés par le navigateur du client.  
+Des outils comme [prefixr](http://prefixr.com/) ou [Autoprefixer](https://github.com/postcss/autoprefixer) pour [Grunt](https://github.com/nDmitry/grunt-autoprefixer) ou [Gulp](https://www.npmjs.org/package/gulp-autoprefixer) peuvent vous aider à être certain de ne rien oublier. Des ressources comme [caniuse](http://caniuse.com/) et [html5please](http://html5please.com/) vous donneront quantités d'informations précieuses.
+- `-moz-`: Firefox et autres navigateurs basés sur Geko- `-webkit-`: Safari et autre navigateurs Webkit (Chrome)- `-khtml-`: Konqueror- `-o-`: Opera- `-ms-`: MicrosoftCertains navigateurs ne supportent tout simplement pas ces propriétés. Il est donc important de prévoir des alternatives au cas où. Une librairie telle que [Modernizr](http://modernizr.com/) vous permettra de détecter le support de ces propriétés par le navigateur du client.  
 
 ## Transitions en CSS3
-Les [transitions](@TODO MDN) permettent au navigateur de gérer la transition entre deux états d’un élément spécifiés par CSS. Voici [une liste des propriétés CSS pouvant être animées](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties).
+Les [transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition) permettent au navigateur de gérer la transition entre deux états d’un élément spécifiés par CSS. Voici [une liste des propriétés CSS pouvant être animées](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties).
 
 Les transitions CSS sont souvent utilisées pour "lisser" les transitions entre deux états d'éléments d'interface: boutons (default et hover ou touch), apparitions successives des éléments d'un menu, etc.Les propriétés permettant de gérer les transitions sont `transition-property`, `transition-duration`, `transition-delay`, `transition-timing-function`.
 
@@ -77,7 +77,7 @@ Effectue une mise à l’échelle. Cette mise à l’échelle peut concerné la 
 
 #### Rotate
 
-Effectue une rotation. Les valeurs spécifiées peuvent être positives ou négatives. Ces valeurs peuvent être spécifiées en degrés, en @TODO ou en nombre de tours
+Effectue une rotation. Les valeurs spécifiées peuvent être positives ou négatives. Ces valeurs peuvent être spécifiées en degrés ou en nombre de tours
 
 ```css
 .myElement
@@ -264,7 +264,7 @@ animation: myAnimation 1s ease-in-out 2s 4,
 
 Vous pouvez facilement définir vos animations, les assigner à vos éléments HTML et en contrôler l'état avec `animation-play-state` qui peut avoir deux valeurs: `running` (default) et `paused`.
 
-Ces propriétés peuvent être modifiées facilement en CSS avec des pseudo-classes comme `:hover` ou en utilisant JavaScript (EventListener et ClassList). @TODO
+Ces propriétés peuvent être modifiées facilement en CSS avec des pseudo-classes comme `:hover` ou en utilisant JavaScript ([addEventListener](https://developer.mozilla.org/en/docs/Web/API/EventTarget.addEventListener) et [classList](https://developer.mozilla.org/en-US/docs/Web/API/Element.classList)).
 
 Exemple avec `:hover`
 
@@ -300,7 +300,7 @@ Exemple avec classes manipulées via JS
 
 - [An introduction to CSS 3D Transforms](http://24ways.org/2010/intro-to-css-3d-transforms/) par [David De Sandro](http://desandro.com/)
 - Le même article, assorti de [démonstrations sur github](http://desandro.github.io/3dtransforms/docs/introduction.html) par David De Sandro toujours
-- [CSS Animations](@TODO): un superbe bouquin pour commencer par Val Head sur Five Simple Steps.
+- [CSS Animations](http://www.fivesimplesteps.com/products/css-animations): un superbe bouquin pour commencer par Val Head sur Five Simple Steps.
 - [Primer on Bézier Curves](http://pomax.github.io/bezierinfo/)
 - [Animations and UX Resources](http://rachelnabors.com/animation-ux/) par Rachel Nabors
 - [Keyframe Animations Syntax](http://css-tricks.com/snippets/css/keyframe-animation-syntax/) par Chris Coyier sur CSS Tricks.
