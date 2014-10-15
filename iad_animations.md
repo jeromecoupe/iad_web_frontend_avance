@@ -152,9 +152,9 @@ Via la propriété `perspective` sur l'élément parent. Dans ce cas, cela affec
 }
 ```
 
-Attention, la perspective n'affecte que les enfants directs. Si vous devez utiliser la même perspective pour des éléments qui sont des descendants plus lointains, vous pouvez utiliser la propriété `transform-style` qui peut prendre les valeurs `flat`ou `preserve-3d`. La seconde valeur d'étendre le contexte 3D à tous les descendants du parent auquel la `perpective` aura été appliquée.
+Attention, la perspective n'affecte que les enfants directs. Si vous devez utiliser la même perspective pour des éléments qui sont des descendants plus lointains, vous pouvez utiliser la propriété `transform-style` qui peut prendre les valeurs `flat`ou `preserve-3d`. La seconde valeur permet d'étendre le contexte 3D à tous les descendants du parent auquel la `perpective` aura été appliquée.
 
-[La plupart des transformations 2D ont leur équivalent en 3D](http://css-tricks.com/almanac/properties/t/transform/).
+[La plupart des transformations 2D ont leur équivalent en 3D](http://css-tricks.com/almanac/properties/t/transform/). Vous retrouverez également la propriété `transform-origin` vue plus haut.
 
 ```
 .myElement
@@ -188,7 +188,7 @@ Il existe également des notations courtes qui requièrent des valeurs pour les 
 }
 ```
 
-Avec transform 3d, vous spécifiez simplement quels axes de rotation sont activés (valeurs 0 ou 1) et vous définissez ensuite l'angle à appliquer.
+Avec `rotate3d`, vous spécifiez simplement quels axes de rotation sont activés (valeurs 0 ou 1) et vous définissez ensuite l'angle à appliquer.
 
 Avec les transformations 3D, vous pouvez placer certains éléments de telle façon que leur "avant" ne fasse plus face à l'écran. Par exemple avec une rotation:
 
@@ -199,7 +199,7 @@ Avec les transformations 3D, vous pouvez placer certains éléments de telle fa�
 }
 ```
 
-Dans ce cas la propriété `backface-visibility` permet de gérer la visibilité des faces d'un élément lorsqu'elles ne font pas face à l'écran. Les valeurs possible sont `visible` et `hidden`.
+Dans ce cas la propriété `backface-visibility` permet de gérer la visibilité des faces d'un élément lorsqu'elles ne font pas face à l'écran. Les valeurs possibles sont `visible` et `hidden`.
 
 ```css
 .myElement
@@ -242,7 +242,7 @@ Les étapes de votre animations peuvent soit être décrites à l'aide des mots-
 
 Note: si vous ne spécifiez pas de de keyframe à 0% ou 100%, les styles originaux appliqués à votre élément seront utilisés.
 
-### Assigner l'animation à un ou plusieur éléments HTML
+### Assigner l'animation à un ou plusieurs éléments HTML
 
 Vous allez maintenant assigner cette animation à un élément HTML et en définir les caractéristiques pour cet élément. Cela se fait à l'aide des propriétés suivantes
 
@@ -301,39 +301,64 @@ animation: myAnimation 1s ease-in-out 2s 4,
 
 ### Exercices
 
-- Voitures roulant à travers l'écran
-- Animation image par image avec un sprite et `steps`
+- Voitures roulant à travers l'écran à différentes vitesses et dans différents sens
+
+- Animation image par image avec un sprite et `steps`. La marche à suivre est ici de réaliser un sprite. Créer une animations `@keyframes` allant du haut du sprite au bas du sprite à l'aide `background-position`. Enfin, spécifier un nombre d'étapes correspondant aux nombre d'images fixes dans le sprite.
+
+```css
+@keyframes fly {
+
+  //keyframe implicite: background-position:0 0;
+
+  100%
+  {
+    background-position:0 -400px;
+  }
+}
+
+.bird
+{
+  position:absolute;
+  top:20px;
+  left:20px;
+  width:200px;
+  height:100px;
+  background:url(../img/bird_sprite.png) 0 0 no-repeat;
+
+  animation: fly .5s steps(4) infinite;
+} 
+```
 
 ### Démarrer et arrêter une animation avec `animation-play-state`
 
 Vous pouvez facilement définir vos animations, les assigner à vos éléments HTML et en contrôler l'état avec `animation-play-state` qui peut avoir deux valeurs: `running` (default) et `paused`.
 
-Ces propriétés peuvent être modifiées facilement en CSS avec des pseudo-classes comme `:hover` ou en utilisant JavaScript ([addEventListener](https://developer.mozilla.org/en/docs/Web/API/EventTarget.addEventListener) et [classList](https://developer.mozilla.org/en-US/docs/Web/API/Element.classList)).
+Ces propriétés peuvent être modifiées facilement en CSS avec des pseudo-classes comme `:hover` ou en utilisant JavaScript ([querySelector](https://developer.mozilla.org/fr/docs/Web/API/document.querySelector), [querySelectorAll](https://developer.mozilla.org/en-US/docs/Web/API/Document.querySelectorAll), [addEventListener](https://developer.mozilla.org/fr/docs/DOM/element.addEventListener) et [classList](https://developer.mozilla.org/fr/docs/DOM/element.classList)).
 
-Exemple avec `:hover`
+Exemple: `animation-play-state` et `:hover`
 
 ```css
-@keyframes rotate
+@keyframes spin
 {
 	0% {transform: rotate(0);}	100% {transform: rotate(1turn);}}
 
 .sticker
-{	animation: rotate 5s linear infinite;
+{	animation: spin 5s linear infinite;
 	animation-play-state: paused;}
 
 .sticker:hover
 {	animation-play-state: running;}
 ```
 
-Exemple avec classes manipulées via JS
+Exemple: `animation-play-state` et classes manipulées via JavaScript.
 
 ```css
-@keyframes rotate
+@keyframes spin
 {
 	0% {transform: rotate(0);}	100% {transform: rotate(1turn);}}
 
 .sticker
-{	animation: rotate 5s linear infinite;
+{	animation: spin 5s linear infinite;
 	animation-play-state: paused;}
 
 .sticker.is-animated
@@ -350,5 +375,5 @@ Exemple avec classes manipulées via JS
 - [Keyframe Animations Syntax](http://css-tricks.com/snippets/css/keyframe-animation-syntax/) par Chris Coyier sur CSS Tricks.
 - [CSS3 Transitions, Transforms, Animation, Filters and more!](http://css3.bradshawenterprises.com/) par Rich Bradshaw. Un superbe résumé de tout ce qu'il faut savoir, exemples inclus.
 - [Disney's 12 principles of animations](http://en.wikipedia.org/wiki/12_basic_principles_of_animation)
-- [Google Material Design - animation](@TODO)
+- Google propose quelques conseils concernant les animations et les transitions dans son introduction au "Material Design": [animation](https://www.google.com/design/spec/animation/authentic-motion.html), [responsive interaction](https://www.google.com/design/spec/animation/responsive-interaction.html), [meaningful transitions](https://www.google.com/design/spec/animation/meaningful-transitions.html), [delightful details](https://www.google.com/design/spec/animation/delightful-details.html).
 - [All the right moves](http://vimeo.com/86821694): vidéo expliquant les interactions entre animations CSS et JavaScript par Val Head
