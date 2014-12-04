@@ -253,7 +253,7 @@ Vous allez maintenant assigner cette animation à un élément HTML et en défin
 
 `@keyframe`, `animation-name` et `animation-duration` sont suffisants mais il vaut mieux toujours définir explicitement les deux autres.
 
-*Exercice: réaliser plusieurs nuages qui traversent l'écran (une seule @keyframe) et expérimenter avec les diverses propriétés vues ci-dessus.*
+*Exercice: réaliser plusieurs nuages qui traversent l'écran (une seule @keyframe) et expérimenter avec les diverses propriétés vues ci-dessus. Attention, des vendor-prefixes sont encore nécessaires pour les navigateurs webkit tels que chrome ou Safari. [Chris Coyier vous en détaille l'utilisation dans un article sur CSS-Tricks](http://css-tricks.com/snippets/css/keyframe-animation-syntax/)*
 
 ### Différentes autres propriétés
 
@@ -267,7 +267,7 @@ Vous allez maintenant assigner cette animation à un élément HTML et en défin
 
 - `none`: l'élément retrouve ses caractéristiques originales une fois l'animation terminée
 - `forwards`: l'élément conserve les caractéristiques de la dernière frame de l'animation
-- `backwards`: l'élément possède les caractéristiques de la première frame de l'animation pedant la durée de `animation-delay`. Cette valeurs est donc particulièrement utile en travaillant avec des délais.
+- `backwards`: l'élément possède les caractéristiques de la première frame de l'animation pendant la durée de `animation-delay`. Cette valeur est donc particulièrement utile en travaillant avec des délais.
 - `both`: combine les effets de `backwards` et `forwards`.
 
 *Exercice: expérimenter avec les diverses valeurs de `animation-fill-mode`.*
