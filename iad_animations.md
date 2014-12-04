@@ -25,7 +25,7 @@ Les transitions CSS sont souvent utilisées pour "lisser" les transitions entre 
 Il est également possible d’utiliser une notation courte:```css
 .myElement
 {	transition: all 2s .2s ease;
-}```Vous pouvez éventuellement combiner diverses transitions, en notation étendue comme en notation courte.      
+}```Vous pouvez éventuellement combiner diverses transitions, en notation étendue comme en notation courte.
 ```css
 .myElement
 {	transition-property: background-color, transform;
@@ -130,7 +130,7 @@ Nous pouvons également combiner différentes transformation en les chainant et 
 
 L'une des notions les plus importantes à comprendre est celle de perspective. [Chris Coyier vous en donne un bon aperçu sur CSS Tricks](http://css-tricks.com/almanac/properties/p/perspective/).
 
-En bref, la perspective est la profondeur de l'axe Z, la distance entre un objet situé sur celui-ci et l'utilisateur. Ces valeurs peuvent aller de 1 à 1000. Plus ce chiffre est petit, plus la perspective est importante. Plus ce chiffre est grand, plus l'effet sera subtil.
+En bref, la perspective est la profondeur de l'axe Z, la distance entre un objet situé sur celui-ci et l'utilisateur. Plus ce chiffre est petit, plus la perspective est importante. Plus cette valeur est grande, plus l'effet sera subtil.
 
 La perspective peut être spécifiées de deux façons:
 
@@ -139,7 +139,7 @@ Via la propriété `transform` directement sur l'élément concerné. Dans ce ca
 ```css
 .myElement
 {
-	transform: perspective(600);
+	transform: perspective(60em);
 }
 ```
 
@@ -148,7 +148,7 @@ Via la propriété `perspective` sur l'élément parent. Dans ce cas, cela affec
 ```css
 .myParentElement
 {
-	perspective:600;
+	perspective:60em;
 }
 ```
 
@@ -246,7 +246,7 @@ Note: si vous ne spécifiez pas de de keyframe à 0% ou 100%, les styles origina
 
 Vous allez maintenant assigner cette animation à un élément HTML et en définir les caractéristiques pour cet élément. Cela se fait à l'aide des propriétés suivantes
 
-- `animation-name`: spécifie le nom de l'animation à appliquer (celui que vous avez spécifié dans votre élément @keyframe) 
+- `animation-name`: spécifie le nom de l'animation à appliquer (celui que vous avez spécifié dans votre élément @keyframe)
 - `animation-duration`: défini la durée de l'animation. Cette propriété est exprimée en secondes `s` ou en milisecondes `ms`.
 - `animation-timing-function`: défini le easing de votre animation: `ease-in`, `ease-out`, `linear` ou encore `cubic-bezier(0.1, 0.7, 1.0, 0.1)` sont des valeurs possibles. Par défaut, la valeur est `ease`.
 - `animation-iteration-count`: défini le nombre de fois que l'animation doit être effectuée. Par défaut, la valeur est 1. Cette valeur peut également être définie comme `infinite`.
@@ -326,7 +326,7 @@ animation: myAnimation 1s ease-in-out 2s 4,
   background:url(../img/bird_sprite.png) 0 0 no-repeat;
 
   animation: fly .5s steps(4) infinite;
-} 
+}
 ```
 
 ### Démarrer et arrêter une animation avec `animation-play-state`
