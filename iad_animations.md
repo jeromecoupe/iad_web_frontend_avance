@@ -17,25 +17,25 @@ Les transitions CSS sont souvent utilisées pour "lisser" les transitions entre 
 ```css
 .myElement
 {	transition-property: background-color;
-	transition-duration: .25s;
-	transition-delay: .1s;
-	transition-timing-function: linear;
+	transition-duration: 0.2s;
+	transition-delay: 0.1s;
+	transition-timing-function: ease-out;
 }
 ```
 Il est également possible d’utiliser une notation courte:```css
 .myElement
-{	transition: all 2s .2s ease;
+{	transition: all 2s 0.2s ease-out;
 }```Vous pouvez éventuellement combiner diverses transitions, en notation étendue comme en notation courte.
 ```css
 .myElement
 {	transition-property: background-color, transform;
-	transition-duration: .25s, .5s;
-	transition-delay: .1s, .2s;
-	transition-timing-function: linear, ease-in;
+	transition-duration: 0.25s, 0.5s;
+	transition-delay: 0.1s, 0.2s;
+	transition-timing-function: ease-out, ease-in;
 }```ou```css
 .myElement
-{	transition: background-color .25s .1s linear,
-                transform .5s .2s ease-in;
+{	transition: background-color 0.25s 0.1s ease-in,
+							transform 0.5s 0.2s ease-out;
 }```
 
 **Note:** la propriété `transition-timing-function` peut également être exprimée avec des courbes de Bezier pour plus de précision. Lea Verou a réalisé un [outil en ligne](http://cubic-bezier.com/) vous permettant de les calculer et de les visualiser facilement. A voir aussi, [Caeser](http://matthewlein.com/ceaser/) par Matthew Lein.*Exercice: expérimenter avec les transitions en :hover*
@@ -57,7 +57,7 @@ Effectue une translation, soit sur l’axe horizontal, soit sur l’axe vertical
 {
 	transform: translateX(100px);
 	transform: translateY(20%);
-	transform: translate(100px,20%);
+	transform: translate(100px, 20%);
 }
 ```
 
@@ -101,7 +101,7 @@ Effectue une distorsion de type “skew” spécifiée en degrés. Celle-ci peut
 
 #### Transform-origin
 
-Par défaut, ces transformation prennent généralement le coin supérieur droit de la bounding-box de l’élément comme point de référence. La propriété transform-origin` permet de modifier ce point de référence.
+Par défaut, ces transformation prennent généralement le coin supérieur droit de la bounding-box de l’élément comme point de référence. La propriété `transform-origin` permet de modifier ce point de référence.
 
 ```css
 .myElement
@@ -115,7 +115,7 @@ Par défaut, ces transformation prennent généralement le coin supérieur droit
 
 #### Chaining
 
-Nous pouvons également combiner différentes transformation en les chainant et en les séparant par un espace. Les navigateurs appliquent ces diverses transformations successivement en commençant par la gauche.
+Nous pouvons également combiner différentes transformation en les chaînant et en les séparant par un espace. Les navigateurs appliquent ces diverses transformations successivement en commençant par la gauche.
 
 ```css
 .myElement
@@ -148,38 +148,38 @@ Via la propriété `perspective` sur l'élément parent. Dans ce cas, cela affec
 ```css
 .myParentElement
 {
-	perspective:60em;
+	perspective: 60em;
 }
 ```
 
-Attention, la perspective n'affecte que les enfants directs. Si vous devez utiliser la même perspective pour des éléments qui sont des descendants plus lointains, vous pouvez utiliser la propriété `transform-style` qui peut prendre les valeurs `flat`ou `preserve-3d`. La seconde valeur permet d'étendre le contexte 3D à tous les descendants du parent auquel la `perpective` aura été appliquée.
+Attention, la perspective n'affecte que les enfants directs. Si vous devez utiliser la même perspective pour des éléments qui sont des descendants plus lointains, vous pouvez utiliser la propriété `transform-style` qui peut prendre les valeurs `flat` ou `preserve-3d`. La seconde valeur permet d'étendre le contexte 3D à tous les descendants du parent auquel la `perpective` aura été appliquée.
 
 [La plupart des transformations 2D ont leur équivalent en 3D](http://css-tricks.com/almanac/properties/t/transform/). Vous retrouverez également la propriété `transform-origin` vue plus haut.
 
-```
+```css
 .myElement
 {
-	transform:rotateX(50deg);
-	transform:rotateY(50deg);
-	transform:rotateZ(50deg);
+	transform: rotateX(50deg);
+	transform: rotateY(50deg);
+	transform: rotateZ(50deg);
 }
 
 .myElement
 {
-	transform:translateX(50px);
-	transform:translateY(50px);
-	transform:translateZ(50px);
+	transform: translateX(50px);
+	transform: translateY(50px);
+	transform: translateZ(50px);
 }
 
 .myElement
 {
-	transform:scaleZ(200px);
+	transform: scaleZ(200px);
 }
 ```
 
 Il existe également des notations courtes qui requièrent des valeurs pour les trois dimensions:
 
-```
+```css
 .myElement
 {
 	transform:translate3d(x, y, z);
@@ -219,7 +219,7 @@ Voyons maintenant comment créer de véritables animations en CSS3. Le processus
 1. Définir votre animation
 2. L'assigner à un ou plusieurs éléments HTML
 
-### Définir vos animations avec @keyframe
+### Définir vos animations avec `@keyframe`
 
 Vous pouvez nommer votre animation et décrire les étapes qui la composent en utilisant l'élément `@keyframe`. Celle-ci défini les propriétés qui doivent être modifiées et à quel moment elles doivent l'être dans le déroulement de votre animation.
 
@@ -227,16 +227,16 @@ Les étapes de votre animations peuvent soit être décrites à l'aide des mots-
 
 ```css
 @keyframes move
-{	from {transform: translateX(0);}
-	to {transform: translateX(400px);}
+{	from { transform: translateX(0); }
+	to { transform: translateX(400px); }
 }
 ```
 
 ```css
 @keyframes move
-{	0% {transform: translateX(0);}
-	20% {transform: translateX(100px);}
-	100% {transform: translateX(400px);}
+{	0% { transform: translateX(0); }
+	20% { transform: translateX(100px); }
+	100% { transform: translateX(400px); }
 }
 ```
 
@@ -246,7 +246,7 @@ Note: si vous ne spécifiez pas de de keyframe à 0% ou 100%, les styles origina
 
 Vous allez maintenant assigner cette animation à un élément HTML et en définir les caractéristiques pour cet élément. Cela se fait à l'aide des propriétés suivantes
 
-- `animation-name`: spécifie le nom de l'animation à appliquer (celui que vous avez spécifié dans votre élément @keyframe)
+- `animation-name`: spécifie le nom de l'animation à appliquer (celui que vous avez spécifié dans votre élément `@keyframe`)
 - `animation-duration`: défini la durée de l'animation. Cette propriété est exprimée en secondes `s` ou en milisecondes `ms`.
 - `animation-timing-function`: défini le easing de votre animation: `ease-in`, `ease-out`, `linear` ou encore `cubic-bezier(0.1, 0.7, 1.0, 0.1)` sont des valeurs possibles. Par défaut, la valeur est `ease`.
 - `animation-iteration-count`: défini le nombre de fois que l'animation doit être effectuée. Par défaut, la valeur est 1. Cette valeur peut également être définie comme `infinite`.
@@ -340,7 +340,7 @@ Exemple: `animation-play-state` et `:hover`
 ```css
 @keyframes spin
 {
-	0% {transform: rotate(0);}	100% {transform: rotate(1turn);}}
+	0% { transform: rotate(0); }	100% { transform: rotate(1turn); }}
 
 .sticker
 {	animation: spin 5s linear infinite;
