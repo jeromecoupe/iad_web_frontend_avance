@@ -137,7 +137,9 @@ En bref, la perspective est la profondeur de l'axe Z, la distance entre un objet
 
 La perspective peut être spécifiées de deux façons:
 
-Via la propriété `transform` directement sur l'élément concerné. Dans ce cas, chaque élément concerné possède son propre "vanishing point".
+#### Via la propriété `transform` directement sur l'élément concerné
+
+Dans ce cas, chaque élément concerné possède son propre "vanishing point".
 
 ```css
 .myElement
@@ -146,7 +148,31 @@ Via la propriété `transform` directement sur l'élément concerné. Dans ce ca
 }
 ```
 
-Via la propriété `perspective` sur l'élément parent. Dans ce cas, cela affecte l'ensemble des enfants du parent, qui partagent alors tous le même "vanishing point".
+Si vous utilisez `transform: perspective(xxx)` sur un élément, veillez bien à l'utiliser **après** avoir spécifier votre propriété transform dans votre CSS.
+
+Ne fonctionne pas:
+
+```css
+.myElement
+{
+  transform: rotateY(20deg);
+  transform: perspective(300px);
+}
+```
+
+Fonctionne:
+
+```css
+.myElement
+{
+  transform: perspective(300px);
+  transform: rotateY(20deg);
+}
+```
+
+#### Via la propriété `perspective` sur l'élément parent
+
+Dans ce cas, cela affecte l'ensemble des enfants du parent, qui partagent alors tous le même "vanishing point".
 
 ```css
 .myParentElement
