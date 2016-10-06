@@ -16,29 +16,30 @@ Les transitions CSS sont souvent utilisées pour "lisser" les transitions entre 
 
 ```css
 .myElement
-{	transition-property: background-color;
-	transition-duration: 0.2s;
-	transition-delay: 0.1s;
-	transition-timing-function: ease-out;
+{  transition-property: background-color;
+  transition-duration: 0.2s;
+  transition-delay: 0.1s;
+  transition-timing-function: ease-out;
 }
 ```
 Il est également possible d’utiliser une notation courte:```css
 .myElement
-{	transition: all 2s 0.2s ease-out;
+{  transition: all 2s 0.2s ease-out;
 }```Vous pouvez éventuellement combiner diverses transitions, en notation étendue comme en notation courte.
+
 ```css
 .myElement
-{	transition-property: background-color, transform;
-	transition-duration: 0.25s, 0.5s;
-	transition-delay: 0.1s, 0.2s;
-	transition-timing-function: ease-out, ease-in;
+{  transition-property: background-color, transform;
+  transition-duration: 0.25s, 0.5s;
+  transition-delay: 0.1s, 0.2s;
+  transition-timing-function: ease-out, ease-in;
 }```ou```css
 .myElement
-{	transition: background-color 0.25s 0.1s ease-in,
-							transform 0.5s 0.2s ease-out;
+{  transition: background-color 0.25s 0.1s ease-in,
+              transform 0.5s 0.2s ease-out;
 }```
 
-**Note:** la propriété `transition-timing-function` peut également être exprimée avec des courbes de Bezier pour plus de précision. Lea Verou a réalisé un [outil en ligne](http://cubic-bezier.com/) vous permettant de les calculer et de les visualiser facilement. A voir aussi, [Caeser](http://matthewlein.com/ceaser/) par Matthew Lein.*Exercice: expérimenter avec les transitions en :hover*
+**Note:** la propriété `transition-timing-function` peut également être exprimée avec des courbes de Bezier pour plus de précision. Lea Verou a réalisé un [outil en ligne](http://cubic-bezier.com/) vous permettant de les calculer et de les visualiser facilement. A voir aussi, [Caeser](http://matthewlein.com/ceaser/) par Matthew Lein ou tout simplement les outils de dévelopement dans Chrome ou Firefox.*Exercice: expérimenter avec les transitions en :hover*
 
 ## Transformations en CSS3
 
@@ -55,9 +56,9 @@ Effectue une translation, soit sur l’axe horizontal, soit sur l’axe vertical
 ```css
 .myElement
 {
-	transform: translateX(100px);
-	transform: translateY(20%);
-	transform: translate(100px, 20%);
+  transform: translateX(100px);
+  transform: translateY(20%);
+  transform: translate(100px, 20%);
 }
 ```
 
@@ -68,9 +69,9 @@ Effectue une mise à l’échelle. Cette mise à l’échelle peut concerné la 
 ```css
 .myElement
 {
-	transform: scaleX(1.5);
-	transform: scaleY(1.5);
-	transform: scale(1.5);
+  transform: scaleX(1.5);
+  transform: scaleY(1.5);
+  transform: scale(1.5);
 }
 ```
 
@@ -81,8 +82,8 @@ Effectue une rotation. Les valeurs spécifiées peuvent être positives ou néga
 ```css
 .myElement
 {
-	transform: rotate(45deg);
-	transform: rotate(2turn);
+  transform: rotate(45deg);
+  transform: rotate(2turn);
 }
 ```
 
@@ -93,9 +94,9 @@ Effectue une distorsion de type “skew” spécifiée en degrés. Celle-ci peut
 ```css
 .myElement
 {
-	transform: skewX(30deg);
-	transform: skewY(30deg);
-	transform: skew(30deg);
+  transform: skewX(30deg);
+  transform: skewY(30deg);
+  transform: skew(30deg);
 }
 ```
 
@@ -106,12 +107,14 @@ Par défaut, ces transformation prennent généralement le coin supérieur droit
 ```css
 .myElement
 {
-	transform-origin: 0 0;
-	transform-origin: 0 50%;
-	transform-origin: 100% 0;
-	transform-origin: 100% 100%;
+  transform-origin: 0 0;
+  transform-origin: 0 50%;
+  transform-origin: 100% 0;
+  transform-origin: 100% 100%;
 }
 ```
+
+**Note**: Firefox ne supporte pas toujours bien la propriété `transform-origin` lorsqu'elle est exprimée en pourcentages et lorsque les transformations sont appliqués à des fichiers SVG. Pour contourner ce problème, vous pouvez la spécifier en pixels par exemple.
 
 #### Chaining
 
@@ -120,7 +123,7 @@ Nous pouvons également combiner différentes transformation en les chaînant et
 ```css
 .myElement
 {
-	transform : rotate(45deg) scale(2);
+  transform : rotate(45deg) scale(2);
 }
 ```
 
@@ -139,7 +142,7 @@ Via la propriété `transform` directement sur l'élément concerné. Dans ce ca
 ```css
 .myElement
 {
-	transform: perspective(60em);
+  transform: perspective(300px);
 }
 ```
 
@@ -148,7 +151,7 @@ Via la propriété `perspective` sur l'élément parent. Dans ce cas, cela affec
 ```css
 .myParentElement
 {
-	perspective: 60em;
+  perspective: 300px;
 }
 ```
 
@@ -159,21 +162,21 @@ Attention, la perspective n'affecte que les enfants directs. Si vous devez utili
 ```css
 .myElement
 {
-	transform: rotateX(50deg);
-	transform: rotateY(50deg);
-	transform: rotateZ(50deg);
+  transform: rotateX(50deg);
+  transform: rotateY(50deg);
+  transform: rotateZ(50deg);
 }
 
 .myElement
 {
-	transform: translateX(50px);
-	transform: translateY(50px);
-	transform: translateZ(50px);
+  transform: translateX(50px);
+  transform: translateY(50px);
+  transform: translateZ(50px);
 }
 
 .myElement
 {
-	transform: scaleZ(200px);
+  transform: scaleZ(200px);
 }
 ```
 
@@ -182,9 +185,9 @@ Il existe également des notations courtes qui requièrent des valeurs pour les 
 ```css
 .myElement
 {
-	transform:translate3d(x, y, z);
-	transform:scale3d(x, y, z);
-	transform:rotate3d(x, y, z, angle);
+  transform:translate3d(x, y, z);
+  transform:scale3d(x, y, z);
+  transform:rotate3d(x, y, z, angle);
 }
 ```
 
@@ -204,9 +207,9 @@ Dans ce cas la propriété `backface-visibility` permet de gérer la visibilité
 ```css
 .myElement
 {
-	transform: rotateY(180deg);
-	backface-visibility:visible;
-	/*backface-visibility:hidden;*/
+  transform: rotateY(180deg);
+  backface-visibility:visible;
+  /*backface-visibility:hidden;*/
 }
 ```
 
@@ -219,41 +222,41 @@ Voyons maintenant comment créer de véritables animations en CSS3. Le processus
 1. Définir votre animation
 2. L'assigner à un ou plusieurs éléments HTML
 
-### Définir vos animations avec `@keyframe`
+### Définir vos animations avec `@keyframes`
 
-Vous pouvez nommer votre animation et décrire les étapes qui la composent en utilisant l'élément `@keyframe`. Celle-ci défini les propriétés qui doivent être modifiées et à quel moment elles doivent l'être dans le déroulement de votre animation.
+Vous pouvez nommer votre animation et décrire les étapes qui la composent en utilisant l'élément `@keyframes`. Celle-ci défini les propriétés qui doivent être modifiées et à quel moment elles doivent l'être dans le déroulement de votre animation.
 
 Les étapes de votre animations peuvent soit être décrites à l'aide des mots-clés `from` et `to`, soit à l'aide de valeurs en pourcentage. Ces dernières sont utiles si vous avez plus de deux étapes et/ou si vous avez besoin d'une progression non-linéaire.
 
 ```css
 @keyframes move
-{	from { transform: translateX(0); }
-	to { transform: translateX(400px); }
+{  from { transform: translateX(0); }
+  to { transform: translateX(400px); }
 }
 ```
 
 ```css
 @keyframes move
-{	0% { transform: translateX(0); }
-	20% { transform: translateX(100px); }
-	100% { transform: translateX(400px); }
+{  0% { transform: translateX(0); }
+  20% { transform: translateX(100px); }
+  100% { transform: translateX(400px); }
 }
 ```
 
-Note: si vous ne spécifiez pas de de keyframe à 0% ou 100%, les styles originaux appliqués à votre élément seront utilisés.
+Note: si vous ne spécifiez pas de de `keyframes` à 0% ou 100%, les styles originaux appliqués à votre élément seront utilisés.
 
 ### Assigner l'animation à un ou plusieurs éléments HTML
 
 Vous allez maintenant assigner cette animation à un élément HTML et en définir les caractéristiques pour cet élément. Cela se fait à l'aide des propriétés suivantes
 
-- `animation-name`: spécifie le nom de l'animation à appliquer (celui que vous avez spécifié dans votre élément `@keyframe`)
+- `animation-name`: spécifie le nom de l'animation à appliquer (celui que vous avez spécifié dans votre élément `@keyframes`)
 - `animation-duration`: défini la durée de l'animation. Cette propriété est exprimée en secondes `s` ou en milisecondes `ms`.
 - `animation-timing-function`: défini le easing de votre animation: `ease-in`, `ease-out`, `linear` ou encore `cubic-bezier(0.1, 0.7, 1.0, 0.1)` sont des valeurs possibles. Par défaut, la valeur est `ease`.
 - `animation-iteration-count`: défini le nombre de fois que l'animation doit être effectuée. Par défaut, la valeur est 1. Cette valeur peut également être définie comme `infinite`.
 
-`@keyframe`, `animation-name` et `animation-duration` sont suffisants mais il vaut mieux toujours définir explicitement les deux autres.
+`@keyframes`, `animation-name` et `animation-duration` sont suffisants mais il vaut mieux toujours définir explicitement les deux autres.
 
-*Exercice: réaliser plusieurs nuages qui traversent l'écran (une seule @keyframe) et expérimenter avec les diverses propriétés vues ci-dessus. Attention, des vendor-prefixes sont encore nécessaires pour les navigateurs webkit tels que chrome ou Safari. [Chris Coyier vous en détaille l'utilisation dans un article sur CSS-Tricks](http://css-tricks.com/snippets/css/keyframe-animation-syntax/)*
+*Exercice: réaliser plusieurs nuages qui traversent l'écran (une seule animation @keyframes) et expérimenter avec les diverses propriétés vues ci-dessus. Attention, des vendor-prefixes sont encore nécessaires pour les navigateurs webkit tels que chrome ou Safari. [Chris Coyier vous en détaille l'utilisation dans un article sur CSS-Tricks](http://css-tricks.com/snippets/css/keyframe-animation-syntax/)*
 
 ### Différentes autres propriétés
 
@@ -302,7 +305,6 @@ animation: myAnimation 1s ease-in-out 2s 4,
 ### Exercices
 
 - Voitures roulant à travers l'écran à différentes vitesses et dans différents sens
-
 - Animation image par image avec un sprite et `steps`. La marche à suivre est ici de réaliser un sprite. Créer une animations `@keyframes` allant du haut du sprite au bas du sprite à l'aide `background-position`. Enfin, spécifier un nombre d'étapes correspondant aux nombre d'images fixes dans le sprite.
 
 ```css
@@ -340,14 +342,14 @@ Exemple: `animation-play-state` et `:hover`
 ```css
 @keyframes spin
 {
-	0% { transform: rotate(0); }	100% { transform: rotate(1turn); }}
+  0% { transform: rotate(0); }  100% { transform: rotate(1turn); }}
 
 .sticker
-{	animation: spin 5s linear infinite;
-	animation-play-state: paused;}
+{  animation: spin 5s linear infinite;
+  animation-play-state: paused;}
 
 .sticker:hover
-{	animation-play-state: running;}
+{  animation-play-state: running;}
 ```
 
 Exemple: `animation-play-state` et classes manipulées via JavaScript.
@@ -355,14 +357,14 @@ Exemple: `animation-play-state` et classes manipulées via JavaScript.
 ```css
 @keyframes spin
 {
-	0% {transform: rotate(0);}	100% {transform: rotate(1turn);}}
+  0% {transform: rotate(0);}  100% {transform: rotate(1turn);}}
 
 .sticker
-{	animation: spin 5s linear infinite;
-	animation-play-state: paused;}
+{  animation: spin 5s linear infinite;
+  animation-play-state: paused;}
 
 .sticker.is-animated
-{	animation-play-state: running;}
+{  animation-play-state: running;}
 ```
 
 ## Ressources
@@ -370,6 +372,7 @@ Exemple: `animation-play-state` et classes manipulées via JavaScript.
 - [An introduction to CSS 3D Transforms](http://24ways.org/2010/intro-to-css-3d-transforms/) par [David De Sandro](http://desandro.com/)
 - Le même article, assorti de [démonstrations sur github](http://desandro.github.io/3dtransforms/docs/introduction.html) par David De Sandro toujours
 - [CSS Animations](http://www.fivesimplesteps.com/products/css-animations): un superbe bouquin pour commencer par Val Head sur Five Simple Steps.
+- Pour ceux qui préfèrent les podcasts et les liens qui les accompagnent, [Motion and Meaning](http://motionandmeaning.io/) par Val Head and Cennydd Bowles.
 - [Primer on Bézier Curves](http://pomax.github.io/bezierinfo/)
 - [Animations and UX Resources](http://rachelnabors.com/animation-ux/) par Rachel Nabors
 - [Keyframe Animations Syntax](http://css-tricks.com/snippets/css/keyframe-animation-syntax/) par Chris Coyier sur CSS Tricks.
@@ -381,3 +384,4 @@ Exemple: `animation-play-state` et classes manipulées via JavaScript.
 - [Flashless animations](http://24ways.org/2012/flashless-animation/) - par Rachel Nabors sur 24ways
 - [How to Create Windows-8-like animations with CSS3 and jQuery](http://sarasoueidan.com/blog/windows8-animations/) - Par Sara Soueidan
 - [CSS Sprite Sheet Animations with steps()](http://blog.teamtreehouse.com/css-sprite-sheet-animations-steps) - par Guil Hernandez sur Treehouse
+- [Web animation API](http://rachelnabors.com/waapi): ressources par Rachel Nabors
