@@ -7,39 +7,67 @@ Animations et transitions sont des propriétés relativement récentes et qui ne
 Pour différencier les propriétés CSS encore en développement de celles qui font partie des recommandations du W3C, les divers navigateurs ont utilisé des extensions propriétaires qui se placent devant les propriétés CSS. Aujourd'hui, les choses ont changées et [les navigateurs utilisent d'avantage des flags](http://demosthenes.info/blog/217/CSS-Vendor-Prefixes-and-Flags).
 
 Des outils comme [Autoprefixer](https://github.com/postcss/autoprefixer) pour [Grunt](https://github.com/nDmitry/grunt-autoprefixer) ou [Gulp](https://www.npmjs.org/package/gulp-autoprefixer) peuvent vous aider à être certain de ne rien oublier. Des ressources comme [caniuse](http://caniuse.com/) et [html5please](http://html5please.com/) vous donneront quantités d'informations précieuses. Voici également une version d'[Autoprefixer fonctionnant en ligne](https://autoprefixer.github.io/).
-- `-moz-`: Firefox et autres navigateurs basés sur Geko- `-webkit-`: Safari et autre navigateurs Webkit (Chrome)- `-khtml-`: Konqueror- `-o-`: Opera- `-ms-`: MicrosoftCertains navigateurs ne supportent tout simplement pas ces propriétés. Il est donc important de prévoir des alternatives au cas où. Une librairie telle que [Modernizr](http://modernizr.com/) vous permettra de détecter le support de ces propriétés par le navigateur du client.  
+
+- `-moz-`: Firefox et autres navigateurs basés sur Geko
+- `-webkit-`: Safari et autre navigateurs Webkit (Chrome)
+- `-khtml-`: Konqueror
+- `-o-`: Opera
+- `-ms-`: Microsoft
+
+Certains navigateurs ne supportent tout simplement pas ces propriétés. Il est donc important de prévoir des alternatives au cas où. Une librairie telle que [Modernizr](http://modernizr.com/) vous permettra de détecter le support de ces propriétés par le navigateur du client. Vous pouvez également utiliser des [feature queries](https://developer.mozilla.org/en-US/docs/Web/CSS/%40supports) avec `@supports`.
 
 ## Transitions en CSS3
-Les [transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition) permettent au navigateur de gérer la transition entre deux états d’un élément spécifiés par CSS. Voici [une liste des propriétés CSS pouvant être animées](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties).
 
-Les transitions CSS sont souvent utilisées pour "lisser" les transitions entre deux états d'éléments d'interface: boutons (default et hover ou touch), apparitions successives des éléments d'un menu, etc.Les propriétés permettant de gérer les transitions sont `transition-property`, `transition-duration`, `transition-delay`, `transition-timing-function`.
+Les [transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition) permettent au navigateur de gérer la transition entre deux états d’un élément spécifiés par CSS. Voici [une liste des propriétés CSS pouvant être animées](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties).
+
+Les transitions CSS sont souvent utilisées pour "lisser" les transitions entre deux états d'éléments d'interface: boutons (default et hover ou touch), apparitions successives des éléments d'un menu, etc.
+
+Les propriétés permettant de gérer les transitions sont `transition-property`, `transition-duration`, `transition-delay`, `transition-timing-function`.
 
 ```css
 .myElement
-{  transition-property: background-color;
+{
+  transition-property: background-color;
   transition-duration: 0.2s;
   transition-delay: 0.1s;
   transition-timing-function: ease-out;
 }
 ```
-Il est également possible d’utiliser une notation courte:```css
-.myElement
-{  transition: all 2s 0.2s ease-out;
-}```Vous pouvez éventuellement combiner diverses transitions, en notation étendue comme en notation courte.
+
+Il est également possible d’utiliser une notation courte:
 
 ```css
 .myElement
-{  transition-property: background-color, transform;
+{
+  transition: all 2s 0.2s ease-out;
+}
+```
+
+Vous pouvez éventuellement combiner diverses transitions, en notation étendue comme en notation courte.
+
+```css
+.myElement
+{
+  transition-property: background-color, transform;
   transition-duration: 0.25s, 0.5s;
   transition-delay: 0.1s, 0.2s;
   transition-timing-function: ease-out, ease-in;
-}```ou```css
-.myElement
-{  transition: background-color 0.25s 0.1s ease-in,
-              transform 0.5s 0.2s ease-out;
-}```
+}
+```
 
-**Note:** la propriété `transition-timing-function` peut également être exprimée avec des courbes de Bezier pour plus de précision. Lea Verou a réalisé un [outil en ligne](http://cubic-bezier.com/) vous permettant de les calculer et de les visualiser facilement. A voir aussi, [Caeser](http://matthewlein.com/ceaser/) par Matthew Lein ou tout simplement les outils de dévelopement dans Chrome ou Firefox.*Exercice: expérimenter avec les transitions en :hover*
+ou
+
+```css
+.myElement
+{
+  transition: background-color 0.25s 0.1s ease-in,
+              transform 0.5s 0.2s ease-out;
+}
+```
+
+**Note:** la propriété `transition-timing-function` peut également être exprimée avec des courbes de Bezier pour plus de précision. Lea Verou a réalisé un [outil en ligne](http://cubic-bezier.com/) vous permettant de les calculer et de les visualiser facilement. A voir aussi, [Caeser](http://matthewlein.com/ceaser/) par Matthew Lein ou tout simplement les outils de dévelopement dans Chrome ou Firefox.
+
+*Exercice: expérimenter avec les transitions en :hover*
 
 ## Transformations en CSS3
 
@@ -189,14 +217,10 @@ Attention, la perspective n'affecte que les enfants directs. Si vous devez utili
 .myElement
 {
   transform: rotateX(50deg);
-  transform: rotateY(50deg);
-  transform: rotateZ(50deg);
 }
 
 .myElement
 {
-  transform: translateX(50px);
-  transform: translateY(50px);
   transform: translateZ(50px);
 }
 
@@ -211,9 +235,9 @@ Il existe également des notations courtes qui requièrent des valeurs pour les 
 ```css
 .myElement
 {
-  transform:translate3d(x, y, z);
-  transform:scale3d(x, y, z);
-  transform:rotate3d(x, y, z, angle);
+  transform:translate3d([x], [y], [z]);
+  transform:scale3d([x], [y], [z]);
+  transform:rotate3d([x], [y], [z], [angle]);
 }
 ```
 
@@ -256,14 +280,16 @@ Les étapes de votre animations peuvent soit être décrites à l'aide des mots-
 
 ```css
 @keyframes move
-{  from { transform: translateX(0); }
+{
+  from { transform: translateX(0); }
   to { transform: translateX(400px); }
 }
 ```
 
 ```css
 @keyframes move
-{  0% { transform: translateX(0); }
+{
+  0% { transform: translateX(0); }
   20% { transform: translateX(100px); }
   100% { transform: translateX(400px); }
 }
@@ -288,7 +314,7 @@ Vous allez maintenant assigner cette animation à un élément HTML et en défin
 
 #### `animation-delay`
 
-`animation-delay` défini le délais avant lequel l'animation se déclenche. Spécifié en secondes `s` ou milisecondes `ms`.
+`animation-delay` défini le délai avant lequel l'animation se déclenche. Spécifié en secondes `s` ou milisecondes `ms`.
 
 #### `animation-fill-mode`
 
@@ -316,7 +342,8 @@ Vous allez maintenant assigner cette animation à un élément HTML et en défin
 
 Une notation courte existe évidemment pour appliquer vos animations à un élément HTML.
 
-```cssanimation: myAnimation .5s ease-in 1s 3;
+```css
+animation: myAnimation .5s ease-in 1s 3;
 ```
 
 Dans l'ordre: <`animation-name`> <`animation-duration`> <`animation-timing-function`> <`animation-delay`> <`animation-iteration-count`>.
@@ -336,7 +363,7 @@ animation: myAnimation 1s ease-in-out 2s 4,
 ```css
 @keyframes fly {
 
-  //keyframe implicite: background-position:0 0;
+  /* keyframe implicite: background-position:0 0; */
 
   100%
   {
@@ -368,14 +395,20 @@ Exemple: `animation-play-state` et `:hover`
 ```css
 @keyframes spin
 {
-  0% { transform: rotate(0); }  100% { transform: rotate(1turn); }}
+  0% { transform: rotate(0); }
+  100% { transform: rotate(1turn); }
+}
 
-.sticker
-{  animation: spin 5s linear infinite;
-  animation-play-state: paused;}
+.windmill
+{
+  animation: spin 5s linear infinite;
+  animation-play-state: paused;
+}
 
-.sticker:hover
-{  animation-play-state: running;}
+.windmill:hover
+{
+  animation-play-state: running;
+}
 ```
 
 Exemple: `animation-play-state` et classes manipulées via JavaScript.
@@ -383,15 +416,25 @@ Exemple: `animation-play-state` et classes manipulées via JavaScript.
 ```css
 @keyframes spin
 {
-  0% {transform: rotate(0);}  100% {transform: rotate(1turn);}}
+  0% {transform: rotate(0);}
+  100% {transform: rotate(1turn);}
+}
 
 .sticker
-{  animation: spin 5s linear infinite;
-  animation-play-state: paused;}
+{
+  animation: spin 5s linear infinite;
+  animation-play-state: paused;
+}
 
 .sticker.is-animated
-{  animation-play-state: running;}
+{
+  animation-play-state: running;
+}
 ```
+
+## Animations avec GSAP (Tweenlight / Tweenmax)
+
+@TODO
 
 ## Ressources
 
