@@ -85,7 +85,15 @@ Effectue une translation, soit sur l’axe horizontal, soit sur l’axe vertical
 .myElement
 {
   transform: translateX(100px);
+}
+
+.myElement
+{
   transform: translateY(20%);
+}
+
+.myElement
+{
   transform: translate(100px, 20%);
 }
 ```
@@ -98,7 +106,15 @@ Effectue une mise à l’échelle. Cette mise à l’échelle peut concerné la 
 .myElement
 {
   transform: scaleX(1.5);
+}
+
+.myElement
+{
   transform: scaleY(1.5);
+}
+
+.myElement
+{
   transform: scale(1.5);
 }
 ```
@@ -110,8 +126,12 @@ Effectue une rotation. Les valeurs spécifiées peuvent être positives ou néga
 ```css
 .myElement
 {
-  transform: rotate(45deg);
   transform: rotate(2turn);
+}
+
+.myElement
+{
+  transform: rotate(45deg);
 }
 ```
 
@@ -122,23 +142,18 @@ Effectue une distorsion de type “skew” spécifiée en degrés. Celle-ci peut
 ```css
 .myElement
 {
-  transform: skewX(30deg);
   transform: skewY(30deg);
-  transform: skew(30deg);
 }
 ```
 
 #### Transform-origin
 
-Par défaut, ces transformation prennent généralement le coin supérieur droit de la bounding-box de l’élément comme point de référence. La propriété `transform-origin` permet de modifier ce point de référence.
+Par défaut, ces transformations prennent généralement le coin supérieur droit de la bounding-box de l’élément comme point de référence. La propriété `transform-origin` permet de modifier ce point de référence.
 
 ```css
 .myElement
 {
-  transform-origin: 0 0;
   transform-origin: 0 50%;
-  transform-origin: 100% 0;
-  transform-origin: 100% 100%;
 }
 ```
 
@@ -172,19 +187,18 @@ Dans ce cas, chaque élément concerné possède son propre "vanishing point".
 ```css
 .myElement
 {
-  transform: perspective(300px);
+  transform: perspective(300px) rotateY(20deg);
 }
 ```
 
-Si vous utilisez `transform: perspective(xxx)` sur un élément, veillez bien à l'utiliser **après** avoir spécifier votre propriété transform dans votre CSS.
+Si vous utilisez `transform: perspective(xxx)` sur un élément, veillez bien à l'utiliser **après** avoir spécifié votre propriété transform dans votre CSS.
 
 Ne fonctionne pas:
 
 ```css
 .myElement
 {
-  transform: rotateY(20deg);
-  transform: perspective(300px);
+  transform: rotateY(20deg) perspective(300px);
 }
 ```
 
@@ -193,8 +207,7 @@ Fonctionne:
 ```css
 .myElement
 {
-  transform: perspective(300px);
-  transform: rotateY(20deg);
+  transform: perspective(300px) rotateY(20deg);
 }
 ```
 
