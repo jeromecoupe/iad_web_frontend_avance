@@ -447,6 +447,139 @@ Exemple: `animation-play-state` et classes manipulées via JavaScript.
 
 ## Animations avec GSAP (Tweenlight / Tweenmax)
 
+CSS est globalement peu efficace pour gérer des animations complexes. Pas de timeline à disposition et il est également difficile de chaîner plusieurs animations. Jouer uniquement sur les délais devient vite compliqué à gérer.
+
+Pour ces animations plus complexes, JavvaScript devient nécessaire. En la matière la librairie [Greensock / GSAP](https://greensock.com/) est le standard du moment et offre les avantages suivants:
+
+- facile d'utilisation
+- attention accordée à la performance (versions light et max)
+- fonctionnalités impressionnates
+- bonnes ressources et tutoriaux
+
+Voici le HTML et le CSS utilisés pour quelques exemples très simples
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animations GSAP</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <div class="square  js-square"></div>
+
+  <!-- libs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/plugins/CSSPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/easing/EasePack.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TimelineLite.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenLite.min.js"></script>
+
+  <!-- script -->
+  <script src="js/simple.js"></script>
+</body>
+</html>
+```
+
+```css
+.square
+{
+  width: 50px;
+  height: 50px;
+  background-color: red;
+}
+```
+
+Au niveau du code JavaScript, commençons par des Tweens simples. GSAP vous permet de réaliser des Tweens de deux façons différentes:
+
+- `to`: utilise les caractéristiques de l'élément comme première frame du tween
+- `from`: utilise les caractéristiques de l'élément comme dernière frame du tween
+
+Dans tous les exemples donnés ici, nous utilisaons des transformations CSS3 pour les déplacements, dans la mesure où elles n'ont pas d'impact sur les autres éléments de la page, utilisent la carte graphique plutôt que le processeur et causent un minimum de repaints de la part du navigateur.
+
+### Tweens avec GSAP
+
+```js
+// simple TO tween
+TweenLite.to(square, 1, {
+  x:'200px'
+});
+```
+
+```js
+// simple FROM tween
+TweenLite.from(square, 1, {
+  y:'-50px'
+});
+```
+
+Nous pouvons également modifier différentes propriétés CSS à la fois. Avec GSAP, vous pouvez animer [quasiment toutes les propriétés CSS](https://greensock.com/docs/Plugins/CSSPlugin). La notation est souvent la même que celle des propriétés CSS mais en camelCase.
+
+```js
+// combine properties
+TweenLite.to(square, 2, {
+  x:"200px",
+  rotation: 360,
+  backgroundColor: "#0000FF"
+});
+```
+
+Vous avez également à votre disposition une [large bibliothèque de fonctions d'Easing](https://greensock.com/docs/Easing). Vous pouvez également définir vos propres effets avec [CustomBounce](https://greensock.com/docs/Easing/CustomBounce), [CustomEase](https://greensock.com/docs/Easing/CustomEase) et [CustomWiggle](https://greensock.com/docs/Easing/CustomWiggle).
+
+```js
+// add easing
+TweenLite.to(square, 2, {
+  x:"200px",
+  ease:Elastic.easeOut
+});
+```
+
+La gestion des délais est également facilitée.
+
+```js
+// add delay
+TweenLite.to(square, 1, {
+  x: 200px,
+  rotation: 360,
+  transformOrigin: "50% 50%",
+  backgroundColor: "blue",
+  scale: 3,
+  delay: 2
+});
+```
+
+## Timeline avec GSAP
+
+L'un des avantages centraux de GSAP est que cette librairie vous permet facilement de gérer des animations complexes grâce à un concept de timeline. Modifier les timings d'une animation complexe avec des élements en successions et survenant en même temps devient un exercice relativement simple.
+
+```js
+// https://greensock.com/timelinelite
+var tl = new TimelineLite();
+
+tl.to(square, 1, {
+  x: "200px",
+  rotation: 360,
+  transformOrigin: "50% 50%",
+  backgroundColor: "blue",
+  scale: 3,
+  delay: 2
+});
+
+tl.to(square, 1, {
+  opacity: 0,
+  y:"-50px",
+  delay: 0.5
+});
+
+tl.play();
+```
+
+A signaler enfin que GSAP vous permet de facilement de gérer des animations complexes dans le cadre de [fichiers SVG inclus dans vos pages](https://greensock.com/svg-tips) comme si il s'agissant d'éléments du DOM de votre document.
+
+## Animation onScroll avec GSAP et ScrollMagic
+
 @TODO
 
 ## Ressources
@@ -467,3 +600,6 @@ Exemple: `animation-play-state` et classes manipulées via JavaScript.
 - [How to Create Windows-8-like animations with CSS3 and jQuery](http://sarasoueidan.com/blog/windows8-animations/) - Par Sara Soueidan
 - [CSS Sprite Sheet Animations with steps()](http://blog.teamtreehouse.com/css-sprite-sheet-animations-steps) - par Guil Hernandez sur Treehouse
 - [Web animation API](http://rachelnabors.com/waapi): ressources par Rachel Nabors
+- [Greensock / GSAP](https://greensock.com): le site de Greensock / GSAP
+- [Getting Started with GSAP](https://greensock.com/get-started-js): commencer avec GSAP (video)
+- [Jump Start: GSAP JS](https://greensock.com/jump-start-js): commencer avec GSAP (video)
