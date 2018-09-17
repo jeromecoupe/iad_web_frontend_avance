@@ -1,75 +1,18 @@
-# Animations et transitions
+# Transformations, animations et transitions
 
 ## Vendor prefixes et feature detection
 
-Animations et transitions sont des propriétés relativement récentes et qui ne sont pas toujours implémentées nativement dans certains navigateurs.
+Même si le support des navigateurs est excellent, [animations](https://caniuse.com/#search=animations) et [transformations](https://caniuse.com/#search=transforms) ne sont pas toujours implémentées nativement dans certains navigateurs.
 
 Pour différencier les propriétés CSS encore en développement de celles qui font partie des recommandations du W3C, les divers navigateurs ont utilisé des extensions propriétaires qui se placent devant les propriétés CSS. Aujourd'hui, les choses ont changées et [les navigateurs utilisent d'avantage des flags](http://demosthenes.info/blog/217/CSS-Vendor-Prefixes-and-Flags).
 
-Des outils comme [Autoprefixer](https://github.com/postcss/autoprefixer) pour [Grunt](https://github.com/nDmitry/grunt-autoprefixer) ou [Gulp](https://www.npmjs.org/package/gulp-autoprefixer) peuvent vous aider à être certain de ne rien oublier. Des ressources comme [caniuse](http://caniuse.com/) et [html5please](http://html5please.com/) vous donneront quantités d'informations précieuses. Voici également une version d'[Autoprefixer fonctionnant en ligne](https://autoprefixer.github.io/).
+Des outils comme [Autoprefixer](https://github.com/postcss/autoprefixer) pour [Grunt](https://github.com/nDmitry/grunt-autoprefixer) ou [Gulp](https://www.npmjs.org/package/gulp-autoprefixer) peuvent vous aider à être certain de ne rien oublier. Des ressources comme [caniuse](http://caniuse.com/) et [html5please](http://html5please.com/) vous donneront quantités d'informations précieuses. Vous pouvez également utiliser des [feature queries](https://developer.mozilla.org/en-US/docs/Web/CSS/%40supports) avec `@supports`.
 
-- `-moz-`: Firefox et autres navigateurs basés sur Geko
-- `-webkit-`: Safari et autre navigateurs Webkit (Chrome)
-- `-khtml-`: Konqueror
-- `-o-`: Opera
-- `-ms-`: Microsoft
+## Transformations CSS
 
-Certains navigateurs ne supportent tout simplement pas ces propriétés. Il est donc important de prévoir des alternatives au cas où. Une librairie telle que [Modernizr](http://modernizr.com/) vous permettra de détecter le support de ces propriétés par le navigateur du client. Vous pouvez également utiliser des [feature queries](https://developer.mozilla.org/en-US/docs/Web/CSS/%40supports) avec `@supports`.
+Les transformations CSS et l'opacité sont les deux propriétés les plus a utilisées pour des transitions et des animations. Animer seulement ces propriétés [permet de rester à 60 frames par seconde](https://medium.com/outsystems-experts/how-to-achieve-60-fps-animations-with-css3-db7b98610108) dans la mesure où les navigateurs utilisent le GPU.
 
-## Transitions en CSS3
-
-Les [transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition) permettent au navigateur de gérer la transition entre deux états d’un élément spécifiés par CSS. Voici [une liste des propriétés CSS pouvant être animées](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties).
-
-Les transitions CSS sont souvent utilisées pour "lisser" les transitions entre deux états d'éléments d'interface: boutons (default et hover ou touch), apparitions successives des éléments d'un menu, etc.
-
-Les propriétés permettant de gérer les transitions sont `transition-property`, `transition-duration`, `transition-delay`, `transition-timing-function`.
-
-```css
-.myElement
-{
-  transition-property: background-color;
-  transition-duration: 0.2s;
-  transition-delay: 0.1s;
-  transition-timing-function: ease-out;
-}
-```
-
-Il est également possible d’utiliser une notation courte:
-
-```css
-.myElement
-{
-  transition: all 2s 0.2s ease-out;
-}
-```
-
-Vous pouvez éventuellement combiner diverses transitions, en notation étendue comme en notation courte.
-
-```css
-.myElement
-{
-  transition-property: background-color, transform;
-  transition-duration: 0.25s, 0.5s;
-  transition-delay: 0.1s, 0.2s;
-  transition-timing-function: ease-out, ease-in;
-}
-```
-
-ou
-
-```css
-.myElement
-{
-  transition: background-color 0.25s 0.1s ease-in,
-              transform 0.5s 0.2s ease-out;
-}
-```
-
-**Note:** la propriété `transition-timing-function` peut également être exprimée avec des courbes de Bezier pour plus de précision. Lea Verou a réalisé un [outil en ligne](http://cubic-bezier.com/) vous permettant de les calculer et de les visualiser facilement. A voir aussi, [Caeser](http://matthewlein.com/ceaser/) par Matthew Lein ou tout simplement les outils de dévelopement dans Chrome ou Firefox.
-
-*Exercice: expérimenter avec les transitions en :hover*
-
-## Transformations en CSS3
+Utiliser la propriété `[will-change](https://developer.mozilla.org/en-US/docs/Web/CSS/will-change)` en CSS ou en javaScript permet au navigateur de préparer les transitions et ainsi d'améliorer les performances.
 
 ### Transformations 2D
 
@@ -191,7 +134,7 @@ Dans ce cas, chaque élément concerné possède son propre "vanishing point".
 }
 ```
 
-Si vous utilisez `transform: perspective(xxx)` sur un élément, veillez bien à l'utiliser **après** avoir spécifié votre propriété transform dans votre CSS.
+Si vous utilisez `transform: perspective(xxx)` sur un élément, veillez bien à l'utiliser **après** avoir spécifié votre propriété `transform` dans votre CSS.
 
 Ne fonctionne pas:
 
@@ -276,7 +219,71 @@ Dans ce cas la propriété `backface-visibility` permet de gérer la visibilité
 }
 ```
 
-*Exercice: expérimenter avec les transformation 3D, perspective et backface-visibility*
+
+## Transitions en CSS
+
+Les [transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition) permettent au navigateur de gérer la transition entre deux états d’un élément spécifiés par CSS. Voici [une liste des propriétés CSS pouvant être animées](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties).
+
+Les transitions CSS sont souvent utilisées pour "lisser" les transitions entre deux états d'éléments d'interface: boutons (default et hover ou touch), apparitions successives des éléments d'un menu, etc.
+
+Les propriétés permettant de gérer les transitions sont `transition-property`, `transition-duration`, `transition-delay`, `transition-timing-function`.
+
+```css
+.myElement
+{
+  transition-property: background-color;
+  transition-duration: 0.2s;
+  transition-delay: 0.1s;
+  transition-timing-function: ease-out;
+}
+```
+
+Il est également possible d’utiliser une notation courte:
+
+```css
+.myElement
+{
+  transition: all 2s 0.2s ease-out;
+}
+```
+
+Vous pouvez éventuellement combiner diverses transitions, en notation étendue comme en notation courte.
+
+```css
+.myElement
+{
+  transition-property: background-color, transform;
+  transition-duration: 0.25s, 0.5s;
+  transition-delay: 0.1s, 0.2s;
+  transition-timing-function: ease-out, ease-in;
+}
+```
+
+ou
+
+```css
+.myElement
+{
+  transition: background-color 0.25s 0.1s ease-in,
+              transform 0.5s 0.2s ease-out;
+}
+```
+
+**Note:** la propriété `transition-timing-function` peut également être exprimée avec des courbes de Bezier pour plus de précision. Lea Verou a réalisé un [outil en ligne](http://cubic-bezier.com/) vous permettant de les calculer et de les visualiser facilement. A voir aussi, [Caeser](http://matthewlein.com/ceaser/) par Matthew Lein ou tout simplement les outils de dévelopement dans Chrome ou Firefox.
+
+*Exercice: expérimenter avec les transitions en :hover*
+
+Les transitions sont également souvent déclenchées à l'aide de JavaScript. Pour cela, il vous faudra sélectionner vos éléments ([querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector), [querySelectorAll](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll)) et ajouter ou supprimer des classes dans votre HTML ([API classList](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList)) lors du déclenchement d'un événement ([eventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventListener)), par exemple un click.
+
+Voyons ensemble comment créer un menu de navigation déclenché par un click sur une icône "hamburger". Ce menu va venir "pousser" le contenu de la page.
+
+*Exercice: créer un menu responsive avec déclenchement au click (querySelector, querySelectorAll, eventListener, classList)*
+
+Les transitions CSS sont faciles à mettre en oeuvre et à manipuler via JavaScript. Elles permettent de réaliser une certaine palette d'effets mais elles ont également leurs limitations:
+
+- les transitions se font toujours d'un état A vers un état B, sans étapes intermédiaires. Pour contrôler plus finement les étapes, il faut se tourner vers les animations CSS.
+- les transitions ne peuvent pas effectuer de loop ou d'itération. Si vous souhaitez une animation en boucle ou ayant plusieurs itérations, il faut vous tourner vers les animations.
+- les transitions ne sont pas réutilisables, les animations peuvent être appliquées à plusieurs éléments une fois définies.
 
 ## Animations en CSS3
 
@@ -403,7 +410,7 @@ Vous pouvez facilement définir vos animations, les assigner à vos éléments H
 
 Ces propriétés peuvent être modifiées facilement en CSS avec des pseudo-classes comme `:hover` ou en utilisant JavaScript ([querySelector](https://developer.mozilla.org/fr/docs/Web/API/document.querySelector), [querySelectorAll](https://developer.mozilla.org/en-US/docs/Web/API/Document.querySelectorAll), [addEventListener](https://developer.mozilla.org/fr/docs/DOM/element.addEventListener) et [classList](https://developer.mozilla.org/fr/docs/DOM/element.classList)).
 
-Exemple: `animation-play-state` et `:hover`
+*Exemple: `animation-play-state` et `:hover`*
 
 ```css
 @keyframes spin
@@ -424,7 +431,7 @@ Exemple: `animation-play-state` et `:hover`
 }
 ```
 
-Exemple: `animation-play-state` et classes manipulées via JavaScript.
+*Exemple: `animation-play-state` et classes manipulées via JavaScript.*
 
 ```css
 @keyframes spin
@@ -445,16 +452,26 @@ Exemple: `animation-play-state` et classes manipulées via JavaScript.
 }
 ```
 
-## Animations avec GSAP (Tweenlight / Tweenmax)
+## Animations JavaScript
 
-CSS est globalement peu efficace pour gérer des animations complexes. Pas de timeline à disposition et il est également difficile de chaîner plusieurs animations. Jouer uniquement sur les délais devient vite compliqué à gérer.
+Les animations en Javascript offrent bien plus de contrôle que les animations CSS si vous avez besoin d'interactivité, d'effets poussé ou de séquences d'animations chainées les unes aux autres.
 
-Pour ces animations plus complexes, JavvaScript devient nécessaire. En la matière la librairie [Greensock / GSAP](https://greensock.com/) est le standard du moment et offre les avantages suivants:
+Des librairies telles que [GSAP de Greensock](https://greensock.com/gsap) offrent une grande facilité d'utilisation et permettent de créer des animations complexes avec SVG, HTML ou Canvas. Ces librairies sont extérieures aux navigateurs mais offrent une grande palette de possibilités aux dévelopeurs. En voici un petit [exemple avec un formulaire de login](https://github.com/jeromecoupe/web_animations_demo).
+
+Au niveau des navigateurs justement, [Web animation API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API) est un standard qui se développe bien et dont les fonctions de bases bénéficient d'un bon support dans les navigateurs récents. Cette spécification est déjà intéressante à utiliser aujourd'hui et deviendra encore plus importante lorsque le support des navigateurs augmentera pour les fonctions avancées (séquences et timeline). Il est également possible d'utiliser `requestAnimationFrame`, qui est plus complexe à gérer au niveau performance mais vous permet de créer à peu près n'importe quelle animation.
+
+L'animation est devenue une part importante des interfaces et du web en général, en partie parce que nous y sommes habitués sur les plateformes mobiles natives comme iOS ou Androïd.
+
+Comme à son habitude, le web intègre cela et avance en direction d'une expérience utilisateur plus riches dans lesquelles l'animation devient de plus en plus importante.
+
+Comme dit plus haut, la librairie [Greensock / GSAP](https://greensock.com/) est le standard du moment et offre les avantages suivants:
 
 - facile d'utilisation
 - attention accordée à la performance (versions light et max)
-- fonctionnalités impressionnates
+- fonctionnalités impressionnantes
 - bonnes ressources et tutoriaux
+- possibilité d'[animer également les SVG](https://greensock.com/svg-tips)
+- gestion des inconststances dans les navigateurs.
 
 Voici le HTML et le CSS utilisés pour quelques exemples très simples
 
@@ -497,7 +514,7 @@ Au niveau du code JavaScript, commençons par des Tweens simples. GSAP vous perm
 - `to`: utilise les caractéristiques de l'élément comme première frame du tween
 - `from`: utilise les caractéristiques de l'élément comme dernière frame du tween
 
-Dans tous les exemples donnés ici, nous utilisaons des transformations CSS3 pour les déplacements, dans la mesure où elles n'ont pas d'impact sur les autres éléments de la page, utilisent la carte graphique plutôt que le processeur et causent un minimum de repaints de la part du navigateur.
+Dans tous les exemples donnés ici, nous utiliserons des transformations CSS3 pour les déplacements, dans la mesure où elles n'ont pas d'impact sur les autres éléments de la page, utilisent la carte graphique plutôt que le processeur et causent un minimum de repaints de la part du navigateur.
 
 ### Tweens avec GSAP
 
@@ -552,7 +569,7 @@ TweenLite.to(square, 1, {
 
 ## Timeline avec GSAP
 
-L'un des avantages centraux de GSAP est que cette librairie vous permet facilement de gérer des animations complexes grâce à un concept de timeline. Modifier les timings d'une animation complexe avec des élements en successions et survenant en même temps devient un exercice relativement simple.
+L'un des avantages centraux de GSAP est que cette librairie vous permet facilement de gérer des animations complexes grâce à un concept de timeline. Modifier les timings d'une animation complexe avec des éléments en successions et survenant en même temps devient un exercice relativement simple.
 
 ```js
 // https://greensock.com/timelinelite
@@ -576,11 +593,17 @@ tl.to(square, 1, {
 tl.play();
 ```
 
-A signaler enfin que GSAP vous permet de facilement de gérer des animations complexes dans le cadre de [fichiers SVG inclus dans vos pages](https://greensock.com/svg-tips) comme si il s'agissant d'éléments du DOM de votre document.
+Voici un [exemple plus abouti](https://github.com/jeromecoupe/web_animations_demo) mais qui vous permet d'utiliser des timelines imbriquées et de gérer efficacement les diverses parties d'une animation complexe.
 
-## Animation onScroll avec GSAP et ScrollMagic
+*Exercice: décortiquer ensemble le script et voir comment les choses fonctionnent*
 
-@TODO
+## Déclenchement au scroll
+
+Avec l'aide Javascript, les transitions et animations CSS peuvent facilement être [déclenchées au scroll](http://dogstudio.be).
+
+`[IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver)` est une API native qui permet facilement de détecter si un ou plusieurs éléments sont en intersection avec d'autres éléments ou avec le viewport du navigateur pour déclencher des animations via quelques changements de classes CSS. Voici [une petite démonstration](https://github.com/jeromecoupe/onscroll_css_animations) rapide.
+
+*Exercice: décortiquer le script et voir comment CSS et JS interagissent*
 
 ## Ressources
 
