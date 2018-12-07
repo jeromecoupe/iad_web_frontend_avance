@@ -134,7 +134,7 @@ Dans ce cas, chaque élément concerné possède son propre "vanishing point".
 }
 ```
 
-Si vous utilisez `transform: perspective(xxx)` sur un élément, veillez bien à l'utiliser **après** avoir spécifié votre propriété `transform` dans votre CSS.
+Si vous utilisez `transform: perspective(xxx)` sur un élément, veillez bien à l'utiliser **avant** d'avoir spécifié votre propriété `transform` dans votre CSS.
 
 Ne fonctionne pas:
 
@@ -471,7 +471,7 @@ Comme dit plus haut, la librairie [Greensock / GSAP](https://greensock.com/) est
 - fonctionnalités impressionnantes
 - bonnes ressources et tutoriaux
 - possibilité d'[animer également les SVG](https://greensock.com/svg-tips)
-- gestion des inconststances dans les navigateurs.
+- gestion des inconsistances dans les navigateurs.
 
 Voici le HTML et le CSS utilisés pour quelques exemples très simples
 
@@ -520,15 +520,25 @@ Dans tous les exemples donnés ici, nous utiliserons des transformations CSS3 po
 
 ```js
 // simple TO tween
-TweenLite.to(square, 1, {
+TweenLite.to(".square", 1, {
   x:'200px'
 });
 ```
 
 ```js
 // simple FROM tween
-TweenLite.from(square, 1, {
+TweenLite.from(".square", 1, {
   y:'-50px'
+});
+```
+
+Vous pouvez également créer et utiliser des variables.
+
+```js
+// simple TO tween
+const square = document.querySelector(".square");
+TweenLite.to(square, 1, {
+  x:'200px'
 });
 ```
 
@@ -536,7 +546,7 @@ Nous pouvons également modifier différentes propriétés CSS à la fois. Avec 
 
 ```js
 // combine properties
-TweenLite.to(square, 2, {
+TweenLite.to(".square", 2, {
   x:"200px",
   rotation: 360,
   backgroundColor: "#0000FF"
@@ -547,7 +557,7 @@ Vous avez également à votre disposition une [large bibliothèque de fonctions 
 
 ```js
 // add easing
-TweenLite.to(square, 2, {
+TweenLite.to(".square", 2, {
   x:"200px",
   ease:Elastic.easeOut
 });
@@ -557,7 +567,7 @@ La gestion des délais est également facilitée.
 
 ```js
 // add delay
-TweenLite.to(square, 1, {
+TweenLite.to(".square", 1, {
   x: 200px,
   rotation: 360,
   transformOrigin: "50% 50%",
@@ -567,7 +577,7 @@ TweenLite.to(square, 1, {
 });
 ```
 
-## Timeline avec GSAP
+### Timeline avec GSAP
 
 L'un des avantages centraux de GSAP est que cette librairie vous permet facilement de gérer des animations complexes grâce à un concept de timeline. Modifier les timings d'une animation complexe avec des éléments en successions et survenant en même temps devient un exercice relativement simple.
 
@@ -575,7 +585,7 @@ L'un des avantages centraux de GSAP est que cette librairie vous permet facileme
 // https://greensock.com/timelinelite
 var tl = new TimelineLite();
 
-tl.to(square, 1, {
+tl.to(".square", 1, {
   x: "200px",
   rotation: 360,
   transformOrigin: "50% 50%",
@@ -584,7 +594,7 @@ tl.to(square, 1, {
   delay: 2
 });
 
-tl.to(square, 1, {
+tl.to(".square", 1, {
   opacity: 0,
   y:"-50px",
   delay: 0.5
@@ -597,13 +607,121 @@ Voici un [exemple plus abouti](https://github.com/jeromecoupe/web_animations_dem
 
 *Exercice: décortiquer ensemble le script et voir comment les choses fonctionnent*
 
-## Déclenchement au scroll
+### Déclenchement au scroll
 
 Avec l'aide Javascript, les transitions et animations CSS peuvent facilement être [déclenchées au scroll](http://dogstudio.be).
 
 `[IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver)` est une API native qui permet facilement de détecter si un ou plusieurs éléments sont en intersection avec d'autres éléments ou avec le viewport du navigateur pour déclencher des animations via quelques changements de classes CSS. Voici [une petite démonstration](https://github.com/jeromecoupe/onscroll_css_animations) rapide.
 
 *Exercice: décortiquer le script et voir comment CSS et JS interagissent*
+
+## Filtres
+
+Les filtres peuvent servir à appliquer des effets simples sur des élements du DOM, typiquement des images. Les filtres fonctionnent à l'aide de la propriété `filter` pour laquelle on spécifie comme valeur un type de filtre et une valeur.
+
+Vous pouvez vous référer à MDN pour une [liste complète des filtres disponibles](https://developer.mozilla.org/fr/docs/Web/CSS/filter).
+
+Il est également possible de réaliser des filtres plus complexes à l'aide de SVG et de les appliquer à votre contenu HTML. Voici un [bon tutoriel sur le sujet par Sara Soueidan](https://www.sarasoueidan.com/blog/svg-filters/).
+
+**exemples**
+
+```css
+.u-grayscale {
+  filter: grayscale(100%);
+}
+
+.u-blur {
+  filter: blur(3px);
+}
+```
+
+## Blend modes
+
+Les propriétés `background-blend-mode` et `mix-blend-mode` permettent de modifier vos images de façon importante, comme vous le feriez avec des calques dans une application graphique. `background-blend-mode` se charge faire un blend mode entre deux backgrounds, tandis que `mix-blend-mode` est utilisé pour gérer un blend mode entre un élément et un autre.
+
+```css
+/* mix blend mode */
+.o-blended-red {
+  display: inline-block;
+  background-color: red;
+}
+
+.o-blended-red > img {
+  filter: grayscale(1);
+  mix-blend-mode: multiply;
+  vertical-align: middle;
+}
+```
+
+Vous pouvez vous référer à MDN pour une liste complète des [`background-blend-mode`](https://developer.mozilla.org/fr/docs/Web/CSS/background-blend-mode) et des [`mix-blend-mode`](https://developer.mozilla.org/fr/docs/Web/CSS/mix-blend-mode) disponibles.
+
+## Cips et masques
+
+Clipping et masking peuvent également aider à apporter un peu de variété à vos images. Ces deux principes se ressemblent en ce qu'ils servent tous les deux à cacher certaines parties d'un élément. Le support au niveau des navigateurs n'est pas identique mais [voici une page de test par Yoksel](https://codepen.io/yoksel/full/fsdbu/) pour vérifier par vous mêmes.
+
+- **masques**: sont des images. Avec `mask-mode: luminance;` les parties noires du masque sont cachés, les parties blanches sont visibles. Avec `mask-mode: alpha;` les parties opaques du masque sont visibles et les parties transparentes cachées.
+- **clips**: sont des formes. Ce qui est à l'intérieur de la forme est visible
+
+```css
+/* appliqué à une <img> */
+.masked {
+  -webkit-mask-image: url(../img/masks-scribbles.svg);
+  mask-image: url(../img/masks-scribbles.svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+```
+
+```css
+/* appliqué à une <img> (ne fontionne qu'avec un svg inclus dans le document pour Safari, Chrome et Opera) */
+
+/* SVG externe / lié au document */
+.clipped-svg {
+  -webkit-clip-path: url(../img/clip.svg#myClip);
+  clip-path: url(../img/clip.svg#myClip);
+}
+
+/* SVG interne au document */
+.clipped-svg {
+  -webkit-clip-path: url(#myClip);
+  clip-path: url(#myClip);
+}
+```
+
+```svg
+<svg width="137" height="130" viewBox="0 0 137 130" xmlns="http://www.w3.org/2000/svg">
+<title>Star</title>
+<defs>
+  <clipPath id="myClip">
+    <path fill="#D8D8D8" d="M68.5 107.25l-42.027 22.095L34.5 82.547.5 49.405l46.987-6.827L68.5 0l21.013 42.578 46.988 6.827-34 33.142 8.026 46.798z" fill-rule="evenodd"/>
+  </clipPath>
+</defs>
+</svg>
+```
+
+```css
+/* appliqué à une <img> */
+.clipped-polygon {
+  -webkit-clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+  clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+}
+```
+
+[Clippy de Bennett Feely](https://bennettfeely.com/clippy/) est un petit outil qui vous permettra de créer facilement des clip paths CSS.
+
+```css
+/* appliqué à une <img> */
+.c-gradient-text {
+  background-image: linear-gradient(to right, #e03d52, #ffb25b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+```
+
+Les SVG et les polygones étant animables, ainsi que les images utilisées comme background, il est possible de réaliser des masques animés en CSS ou en JS.
+
+*Exercice: expérimenter avec clipping et masques dans Figma et en code*
 
 ## Ressources
 
