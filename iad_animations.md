@@ -602,22 +602,19 @@ Voici le HTML et le CSS utilisés pour quelques exemples très simples
 </head>
 <body>
 
-  <div class="square  js-square"></div>
+  <div class="box  js-box"></div>
 
-  <!-- libs -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/plugins/CSSPlugin.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/easing/EasePack.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TimelineLite.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenLite.min.js"></script>
+  <!-- lib -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js"></script>
 
   <!-- script -->
-  <script src="js/simple.js"></script>
+  <script src="js/anims.js"></script>
 </body>
 </html>
 ```
 
 ```css
-.square
+.box
 {
   width: 50px;
   height: 50px;
@@ -635,47 +632,85 @@ Dans tous les exemples donnés ici, nous utiliserons des transformations CSS3 po
 ### Tweens avec GSAP
 
 ```js
-// simple TO tween
-TweenLite.to(".square", 1, {
-  x:'200px'
-});
-```
+const myBox = document.querySelector(".js-box");
 
-```js
-// simple FROM tween
-TweenLite.from(".square", 1, {
-  y:'-50px'
-});
-```
-
-Vous pouvez également créer et utiliser des variables.
-
-```js
-// simple TO tween
-const square = document.querySelector(".square");
-TweenLite.to(square, 1, {
-  x:'200px'
-});
-```
-
-Nous pouvons également modifier différentes propriétés CSS à la fois. Avec GSAP, vous pouvez animer [quasiment toutes les propriétés CSS](https://greensock.com/docs/Plugins/CSSPlugin). La notation est souvent la même que celle des propriétés CSS mais en camelCase.
-
-```js
-// combine properties
-TweenLite.to(".square", 2, {
-  x:"200px",
-  rotation: 360,
+// To tween
+// utilise les caractéristiques de départ
+// spécifie les caractéristiques d'arrivée
+gsap.to(myBox, {
+  rotation: 180,
+  x: 100,
+  duration: 1,
   backgroundColor: "#0000FF"
 });
 ```
 
-Vous avez également à votre disposition une [large bibliothèque de fonctions d'Easing](https://greensock.com/docs/Easing). Vous pouvez également définir vos propres effets avec [CustomBounce](https://greensock.com/docs/Easing/CustomBounce), [CustomEase](https://greensock.com/docs/Easing/CustomEase) et [CustomWiggle](https://greensock.com/docs/Easing/CustomWiggle).
+```js
+const myBox = document.querySelector(".js-box");
+
+// From tween
+// utilise les caractéristiques d'arrivée
+// spécifie les caractéristiques de départ
+gsap.from(myBox, {
+  rotation: 180,
+  x: 100,
+  duration: 1,
+  backgroundColor: "#0000FF"
+});
+```
 
 ```js
-// add easing
-TweenLite.to(".square", 2, {
-  x:"200px",
-  ease:Elastic.easeOut
+const myBox = document.querySelector(".js-box");
+
+// toFrom tween
+// spécifie les caractéristiques d'arrivée et de départ
+gsap.fromTo(
+  myBox,
+  {
+    rotation: 21,
+    backgroundColor: "#00FF00"
+  },
+  {
+    delay: 1,
+    rotation: 180,
+    x: 250,
+    duration: 1,
+    backgroundColor: "#0000FF"
+  }
+);
+```
+
+```js
+const myBox = document.querySelector(".js-box");
+
+// Using set
+// spécifie les caractéristiques d'arrivée et de départ
+gsap.set(myBox, {
+  rotation: 21,
+  backgroundColor: "#00FF00"
+});
+
+gsap.to(myBox, {
+  delay: 1,
+  rotation: 180,
+  x: 250,
+  duration: 1,
+  backgroundColor: "#0000FF"
+});
+```
+
+Avec GSAP, nous pouvons donc modifier différentes propriétés CSS à la fois et animer quasiment toutes les propriétés CSS, même si il est conseillé de se limiter le plus possible a `transfrom` et `opacity` pour des raisons de performance. La notation est souvent la même que celle des propriétés CSS mais en `camelCase`.
+
+Vous avez également à votre disposition une [large bibliothèque de fonctions d'Easing](https://greensock.com/docs/Easing) et vous pouvez définir vos propres effets avec [CustomBounce](https://greensock.com/docs/Easing/CustomBounce), [CustomEase](https://greensock.com/docs/Easing/CustomEase) et [CustomWiggle](https://greensock.com/docs/Easing/CustomWiggle).
+
+```js
+const myBox = document.querySelector(".js-box");
+
+// To tween
+gsap.to(myBox, {
+  x: 100,
+  ease: "elastic. out(1, 0.2)",
+  duration: 0.5
 });
 ```
 
@@ -683,13 +718,27 @@ La gestion des délais est également facilitée.
 
 ```js
 // add delay
-TweenLite.to(".square", 1, {
-  x: 200px,
-  rotation: 360,
-  transformOrigin: "50% 50%",
-  backgroundColor: "blue",
-  scale: 3,
-  delay: 2
+const myBox = document.querySelector(".js-box");
+
+gsap.to(myBox, {
+  x: 100,
+  ease: "elastic. out(1, 0.2)",
+  duration: 0.5,
+  delay: 1
+});
+```
+
+Si vous avez plsusieurs éléments à animer, la fonction `stagger` est très pratique.
+
+```js
+// stagger
+const myBoxes = document.querySelectorAll(".js-box");
+
+// using stagger
+gsap.to(myBoxes, {
+  stagger: 0.1,
+  rotation: 180,
+  x: 200
 });
 ```
 
@@ -698,28 +747,115 @@ TweenLite.to(".square", 1, {
 L'un des avantages centraux de GSAP est que cette librairie vous permet facilement de gérer des animations complexes grâce à un concept de timeline. Modifier les timings d'une animation complexe avec des éléments en successions et survenant en même temps devient un exercice relativement simple.
 
 ```js
-// https://greensock.com/timelinelite
-var tl = new TimelineLite();
+const myBox = document.querySelector(".js-box");
 
-tl.to(".square", 1, {
-  x: "200px",
-  rotation: 360,
-  transformOrigin: "50% 50%",
+// simple timeline with parameters
+let tl = gsap.timeline({ repeat: -1, yoyo: true });
+tl.pause();
+
+tl.to(myBox, {
+  x: 200,
+  duration: 0.5
+});
+
+tl.to(myBox, {
   backgroundColor: "blue",
-  scale: 3,
-  delay: 2
+  rotation: 360,
+  duration: 0.1,
+  repeat: 5
 });
 
-tl.to(".square", 1, {
-  opacity: 0,
-  y:"-50px",
-  delay: 0.5
+tl.to(myBox, {
+  y: 200,
+  duration: 1
 });
+
+tl.to(myBox, {
+  backgroundColor: "green",
+  x: 0,
+  duration: 0.2
+});
+
+tl.to(myBox, {
+  backgroundColor: "red",
+  y: 0,
+  duration: 0.25
+}, "-=0.2");
 
 tl.play();
 ```
 
-Voici un [exemple plus abouti](https://github.com/jeromecoupe/web_animations_demo) mais qui vous permet d'utiliser des timelines imbriquées et de gérer efficacement les diverses parties d'une animation complexe.
+Les timelines peuvent aussi être utilisées de façon impriquées pour avoir un meilleur contrôle de vos animation et en nommer les différentes parties.
+
+```js
+// Self invoking function
+// Avoid variables collisions by scoping them
+(function(){
+
+  // nested timelines
+  // better for composing complex animations and overlap
+  const myBox = document.querySelector(".js-box");
+
+  function one() {
+    let tl = gsap.timeline();
+    tl.to(myBox, { x: 200, duration: 1, delay: 1 });
+    return tl;
+  }
+
+  function two() {
+    let tl = gsap.timeline();
+    tl.to(myBox, {
+      backgroundColor: "blue",
+      rotation: 360,
+      duration: 0.5,
+      repeat: 3
+    });
+    return tl;
+  }
+
+  function three() {
+    let tl = gsap.timeline();
+    tl.to(myBox, {
+      y: 200,
+      duration: 1
+    });
+    return tl;
+  }
+
+  function four() {
+    let tl = gsap.timeline();
+    tl.to(myBox, {
+      backgroundColor: "green",
+      x: 0,
+      duration: 0.25
+    });
+    return tl;
+  }
+
+  function five() {
+    let tl = gsap.timeline();
+    tl.to(myBox, {
+      backgroundColor: "red",
+      y: 0,
+      duration: 1
+    });
+    return tl;
+  }
+
+  let master = gsap.timeline();
+  master.pause();
+  master
+    .add(one())
+    .add(two(), "+=2")
+    .add(three(), "-=1")
+    .add(four())
+    .add(five());
+  master.play();
+
+})();
+```
+
+Voici un [exemple plus abouti](https://github.com/jeromecoupe/web_animations_demo) utilisant des timelines imbriquées pour gérer efficacement les diverses parties d'une animation complexe.
 
 *Exercice: décortiquer ensemble le script et voir comment les choses fonctionnent*
 
