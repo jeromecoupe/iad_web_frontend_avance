@@ -887,3 +887,4 @@ _Exercice: décortiquer ensemble le script et voir comment les choses fonctionne
 - [Greensock / GSAP](https://greensock.com): le site de Greensock / GSAP
 - [Getting Started with GSAP](https://greensock.com/get-started-js): commencer avec GSAP (video)
 - [Jump Start: GSAP JS](https://greensock.com/jump-start-js): commencer avec GSAP (video)
+- [How to Animate on the Web With GreenSock ](https://css-tricks.com/how-to-animate-on-the-web-with-greensock/): par Sarah Drasner
