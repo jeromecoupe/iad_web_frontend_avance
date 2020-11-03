@@ -25,18 +25,15 @@ L’ensemble de ces transformations ont lieu après que la page soit rendue et n
 Effectue une translation, soit sur l’axe horizontal, soit sur l’axe vertical, soit sur les deux. Les valeurs spécifiées peuvent être positives ou négatives.
 
 ```css
-.myElement
-{
+.myElement {
   transform: translateX(100px);
 }
 
-.myElement
-{
+.myElement {
   transform: translateY(20%);
 }
 
-.myElement
-{
+.myElement {
   transform: translate(100px, 20%);
 }
 ```
@@ -46,18 +43,15 @@ Effectue une translation, soit sur l’axe horizontal, soit sur l’axe vertical
 Effectue une mise à l’échelle. Cette mise à l’échelle peut concerné la hauteur ou la largeur d’un élément ou les deux. L’argument ne prend pas ici d’unité de mesure, il s’agit d’un ratio par rapport à la taille par défaut de l’élément.
 
 ```css
-.myElement
-{
+.myElement {
   transform: scaleX(1.5);
 }
 
-.myElement
-{
+.myElement {
   transform: scaleY(1.5);
 }
 
-.myElement
-{
+.myElement {
   transform: scale(1.5);
 }
 ```
@@ -67,13 +61,11 @@ Effectue une mise à l’échelle. Cette mise à l’échelle peut concerné la 
 Effectue une rotation. Les valeurs spécifiées peuvent être positives ou négatives. Ces valeurs peuvent être spécifiées en degrés ou en nombre de tours
 
 ```css
-.myElement
-{
+.myElement {
   transform: rotate(2turn);
 }
 
-.myElement
-{
+.myElement {
   transform: rotate(45deg);
 }
 ```
@@ -83,8 +75,7 @@ Effectue une rotation. Les valeurs spécifiées peuvent être positives ou néga
 Effectue une distorsion de type “skew” spécifiée en degrés. Celle-ci peut être appliquée selon les axes horizontaux ou verticaux ou encore selon les deux à la fois. Les valeurs spécifiées peuvent être positives ou négatives.
 
 ```css
-.myElement
-{
+.myElement {
   transform: skewY(30deg);
 }
 ```
@@ -94,8 +85,7 @@ Effectue une distorsion de type “skew” spécifiée en degrés. Celle-ci peut
 Par défaut, ces transformations prennent généralement le coin supérieur droit de la bounding-box de l’élément comme point de référence. La propriété `transform-origin` permet de modifier ce point de référence.
 
 ```css
-.myElement
-{
+.myElement {
   transform-origin: 0 50%;
 }
 ```
@@ -107,13 +97,12 @@ Par défaut, ces transformations prennent généralement le coin supérieur droi
 Nous pouvons également combiner différentes transformation en les chaînant et en les séparant par un espace. Les navigateurs appliquent ces diverses transformations successivement en commençant par la gauche.
 
 ```css
-.myElement
-{
-  transform : rotate(45deg) scale(2);
+.myElement {
+  transform: rotate(45deg) scale(2);
 }
 ```
 
-*Exercice: expérimenter avec les transformation 2D en :hover*
+_Exercice: expérimenter avec les transformation 2D en :hover_
 
 ### Transformations 3D
 
@@ -128,8 +117,7 @@ La perspective peut être spécifiées de deux façons:
 Dans ce cas, chaque élément concerné possède son propre "vanishing point".
 
 ```css
-.myElement
-{
+.myElement {
   transform: perspective(300px) rotateY(20deg);
 }
 ```
@@ -139,8 +127,7 @@ Si vous utilisez `transform: perspective(xxx)` sur un élément, veillez bien à
 Ne fonctionne pas:
 
 ```css
-.myElement
-{
+.myElement {
   transform: rotateY(20deg) perspective(300px);
 }
 ```
@@ -148,8 +135,7 @@ Ne fonctionne pas:
 Fonctionne:
 
 ```css
-.myElement
-{
+.myElement {
   transform: perspective(300px) rotateY(20deg);
 }
 ```
@@ -159,8 +145,7 @@ Fonctionne:
 Dans ce cas, cela affecte l'ensemble des enfants du parent, qui partagent alors tous le même "vanishing point".
 
 ```css
-.myParentElement
-{
+.myParentElement {
   perspective: 300px;
 }
 ```
@@ -170,18 +155,15 @@ Attention, la perspective n'affecte que les enfants directs. Si vous devez utili
 [La plupart des transformations 2D ont leur équivalent en 3D](http://css-tricks.com/almanac/properties/t/transform/). Vous retrouverez également la propriété `transform-origin` vue plus haut.
 
 ```css
-.myElement
-{
+.myElement {
   transform: rotateX(50deg);
 }
 
-.myElement
-{
+.myElement {
   transform: translateZ(50px);
 }
 
-.myElement
-{
+.myElement {
   transform: scaleZ(200px);
 }
 ```
@@ -189,11 +171,10 @@ Attention, la perspective n'affecte que les enfants directs. Si vous devez utili
 Il existe également des notations courtes qui requièrent des valeurs pour les trois dimensions:
 
 ```css
-.myElement
-{
-  transform:translate3d([x], [y], [z]);
-  transform:scale3d([x], [y], [z]);
-  transform:rotate3d([x], [y], [z], [angle]);
+.myElement {
+  transform: translate3d([x], [y], [z]);
+  transform: scale3d([x], [y], [z]);
+  transform: rotate3d([x], [y], [z], [angle]);
 }
 ```
 
@@ -202,8 +183,7 @@ Avec `rotate3d`, vous spécifiez simplement quels axes de rotation sont activés
 Avec les transformations 3D, vous pouvez placer certains éléments de telle façon que leur "avant" ne fasse plus face à l'écran. Par exemple avec une rotation:
 
 ```css
-.myElement
-{
+.myElement {
   transform: rotateY(180deg);
 }
 ```
@@ -211,14 +191,12 @@ Avec les transformations 3D, vous pouvez placer certains éléments de telle fa�
 Dans ce cas la propriété `backface-visibility` permet de gérer la visibilité des faces d'un élément lorsqu'elles ne font pas face à l'écran. Les valeurs possibles sont `visible` et `hidden`.
 
 ```css
-.myElement
-{
+.myElement {
   transform: rotateY(180deg);
-  backface-visibility:visible;
+  backface-visibility: visible;
   /*backface-visibility:hidden;*/
 }
 ```
-
 
 ## Transitions en CSS
 
@@ -229,8 +207,7 @@ Les transitions CSS sont souvent utilisées pour "lisser" les transitions entre 
 Les propriétés permettant de gérer les transitions sont `transition-property`, `transition-duration`, `transition-delay`, `transition-timing-function`.
 
 ```css
-.myElement
-{
+.myElement {
   transition-property: background-color;
   transition-duration: 0.2s;
   transition-delay: 0.1s;
@@ -241,8 +218,7 @@ Les propriétés permettant de gérer les transitions sont `transition-property`
 Il est également possible d’utiliser une notation courte:
 
 ```css
-.myElement
-{
+.myElement {
   transition: all 2s 0.2s ease-out;
 }
 ```
@@ -250,8 +226,7 @@ Il est également possible d’utiliser une notation courte:
 Vous pouvez éventuellement combiner diverses transitions, en notation étendue comme en notation courte.
 
 ```css
-.myElement
-{
+.myElement {
   transition-property: background-color, transform;
   transition-duration: 0.25s, 0.5s;
   transition-delay: 0.1s, 0.2s;
@@ -262,22 +237,20 @@ Vous pouvez éventuellement combiner diverses transitions, en notation étendu
 ou
 
 ```css
-.myElement
-{
-  transition: background-color 0.25s 0.1s ease-in,
-              transform 0.5s 0.2s ease-out;
+.myElement {
+  transition: background-color 0.25s 0.1s ease-in, transform 0.5s 0.2s ease-out;
 }
 ```
 
 **Note:** la propriété `transition-timing-function` peut également être exprimée avec des courbes de Bezier pour plus de précision. Lea Verou a réalisé un [outil en ligne](http://cubic-bezier.com/) vous permettant de les calculer et de les visualiser facilement. A voir aussi, [Caeser](http://matthewlein.com/ceaser/) par Matthew Lein ou tout simplement les outils de dévelopement dans Chrome ou Firefox.
 
-*Exercice: expérimenter avec les transitions en :hover*
+_Exercice: expérimenter avec les transitions en :hover_
 
 Les transitions sont également souvent déclenchées à l'aide de JavaScript. Pour cela, il vous faudra sélectionner vos éléments ([querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector), [querySelectorAll](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll)) et ajouter ou supprimer des classes dans votre HTML ([API classList](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList)) lors du déclenchement d'un événement ([eventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventListener)), par exemple un click.
 
 Voyons ensemble comment créer un menu de navigation déclenché par un click sur une icône "hamburger". Ce menu va venir "pousser" le contenu de la page.
 
-*Exercice: créer un menu responsive avec déclenchement au click (querySelector, querySelectorAll, eventListener, classList)*
+_Exercice: créer un menu responsive avec déclenchement au click (querySelector, querySelectorAll, eventListener, classList)_
 
 Les transitions CSS sont faciles à mettre en oeuvre et à manipuler via JavaScript. Elles permettent de réaliser une certaine palette d'effets mais elles ont également leurs limitations:
 
@@ -299,19 +272,27 @@ Vous pouvez nommer votre animation et décrire les étapes qui la composent en u
 Les étapes de votre animations peuvent soit être décrites à l'aide des mots-clés `from` et `to`, soit à l'aide de valeurs en pourcentage. Ces dernières sont utiles si vous avez plus de deux étapes et/ou si vous avez besoin d'une progression non-linéaire.
 
 ```css
-@keyframes move
-{
-  from { transform: translateX(0); }
-  to { transform: translateX(400px); }
+@keyframes move {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(400px);
+  }
 }
 ```
 
 ```css
-@keyframes move
-{
-  0% { transform: translateX(0); }
-  20% { transform: translateX(100px); }
-  100% { transform: translateX(400px); }
+@keyframes move {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(100px);
+  }
+  100% {
+    transform: translateX(400px);
+  }
 }
 ```
 
@@ -328,7 +309,7 @@ Vous allez maintenant assigner cette animation à un élément HTML et en défin
 
 `@keyframes`, `animation-name` et `animation-duration` sont suffisants mais il vaut mieux toujours définir explicitement les deux autres.
 
-*Exercice: réaliser plusieurs nuages qui traversent l'écran (une seule animation @keyframes) et expérimenter avec les diverses propriétés vues ci-dessus. Attention, des vendor-prefixes sont encore nécessaires pour les navigateurs webkit tels que chrome ou Safari. [Chris Coyier vous en détaille l'utilisation dans un article sur CSS-Tricks](http://css-tricks.com/snippets/css/keyframe-animation-syntax/)*
+_Exercice: réaliser plusieurs nuages qui traversent l'écran (une seule animation @keyframes) et expérimenter avec les diverses propriétés vues ci-dessus. Attention, des vendor-prefixes sont encore nécessaires pour les navigateurs webkit tels que chrome ou Safari. [Chris Coyier vous en détaille l'utilisation dans un article sur CSS-Tricks](http://css-tricks.com/snippets/css/keyframe-animation-syntax/)_
 
 ### Différentes autres propriétés
 
@@ -345,25 +326,25 @@ Vous allez maintenant assigner cette animation à un élément HTML et en défin
 - `backwards`: l'élément possède les caractéristiques de la première frame de l'animation pendant la durée de `animation-delay`. Cette valeur est donc particulièrement utile en travaillant avec des délais.
 - `both`: combine les effets de `backwards` et `forwards`.
 
-*Exercice: expérimenter avec les diverses valeurs de `animation-fill-mode`.*
+_Exercice: expérimenter avec les diverses valeurs de `animation-fill-mode`._
 
 #### `animation-direction`
 
 `animation-direction` défini la direction dans laquelle se déroule l'animation.
 
 - `normal`: l'animation se déroule de la première frame définie jusqu'à la dernière. C'est la valeur par défaut.
-- `reverse`:  l'animation se déroule de la dernière frame définie jusqu'à la première.
+- `reverse`: l'animation se déroule de la dernière frame définie jusqu'à la première.
 - `alternate`: ne peut être utilisé que lorsque votre propriété `animation-count` est supérieure à 1. La première fois que l'animation est exécutée, elle se déroule en mode `normal`, la seconde fois en mode `reverse`, etc.
 - `alternate-reverse`: identique à `alternate` hormis que l'animation se déroule d'abord en mode `reverse`.
 
-*Exercice: expérimenter avec les diverses valeurs de `animation-direction`.*
+_Exercice: expérimenter avec les diverses valeurs de `animation-direction`._
 
 ## Notation courte et chaining
 
 Une notation courte existe évidemment pour appliquer vos animations à un élément HTML.
 
 ```css
-animation: myAnimation .5s ease-in 1s 3;
+animation: myAnimation 0.5s ease-in 1s 3;
 ```
 
 Dans l'ordre: <`animation-name`> <`animation-duration`> <`animation-timing-function`> <`animation-delay`> <`animation-iteration-count`>.
@@ -371,8 +352,7 @@ Dans l'ordre: <`animation-name`> <`animation-duration`> <`animation-timing-funct
 Il est également possible de chaîner plusieurs animations sur un même élément.
 
 ```css
-animation: myAnimation 1s ease-in-out 2s 4,
-           myOtherAnimation 4s ease-out 2s;
+animation: myAnimation 1s ease-in-out 2s 4, myOtherAnimation 4s ease-out 2s;
 ```
 
 ### Exercices
@@ -382,25 +362,22 @@ animation: myAnimation 1s ease-in-out 2s 4,
 
 ```css
 @keyframes fly {
-
   /* keyframe implicite: background-position:0 0; */
 
-  100%
-  {
-    background-position:0 -400px;
+  100% {
+    background-position: 0 -400px;
   }
 }
 
-.bird
-{
-  position:absolute;
-  top:20px;
-  left:20px;
-  width:200px;
-  height:100px;
-  background:url(../img/bird_sprite.png) 0 0 no-repeat;
+.bird {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 200px;
+  height: 100px;
+  background: url(../img/bird_sprite.png) 0 0 no-repeat;
 
-  animation: fly .5s steps(4) infinite;
+  animation: fly 0.5s steps(4) infinite;
 }
 ```
 
@@ -410,44 +387,46 @@ Vous pouvez facilement définir vos animations, les assigner à vos éléments H
 
 Ces propriétés peuvent être modifiées facilement en CSS avec des pseudo-classes comme `:hover` ou en utilisant JavaScript ([querySelector](https://developer.mozilla.org/fr/docs/Web/API/document.querySelector), [querySelectorAll](https://developer.mozilla.org/en-US/docs/Web/API/Document.querySelectorAll), [addEventListener](https://developer.mozilla.org/fr/docs/DOM/element.addEventListener) et [classList](https://developer.mozilla.org/fr/docs/DOM/element.classList)).
 
-*Exemple: `animation-play-state` et `:hover`*
+_Exemple: `animation-play-state` et `:hover`_
 
 ```css
-@keyframes spin
-{
-  0% { transform: rotate(0); }
-  100% { transform: rotate(1turn); }
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(1turn);
+  }
 }
 
-.windmill
-{
+.windmill {
   animation: spin 5s linear infinite;
   animation-play-state: paused;
 }
 
-.windmill:hover
-{
+.windmill:hover {
   animation-play-state: running;
 }
 ```
 
-*Exemple: `animation-play-state` et classes manipulées via JavaScript.*
+_Exemple: `animation-play-state` et classes manipulées via JavaScript._
 
 ```css
-@keyframes spin
-{
-  0% {transform: rotate(0);}
-  100% {transform: rotate(1turn);}
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(1turn);
+  }
 }
 
-.sticker
-{
+.sticker {
   animation: spin 5s linear infinite;
   animation-play-state: paused;
 }
 
-.sticker.is-animated
-{
+.sticker.is-animated {
   animation-play-state: running;
 }
 ```
@@ -458,7 +437,7 @@ Avec l'aide Javascript, les transitions et animations CSS peuvent facilement êt
 
 `[IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver)` est une API native qui permet facilement de détecter si un ou plusieurs éléments sont en intersection avec d'autres éléments ou avec le viewport du navigateur pour déclencher des animations via quelques changements de classes CSS. Voici [une petite démonstration](https://github.com/jeromecoupe/onscroll_css_animations) rapide.
 
-*Exercice: décortiquer le script et voir comment CSS et JS interagissent*
+_Exercice: décortiquer le script et voir comment CSS et JS interagissent_
 
 ## Filtres
 
@@ -500,12 +479,14 @@ Les propriétés `background-blend-mode` et `mix-blend-mode` permettent de modif
 
 Vous pouvez vous référer à MDN pour une liste complète des [`background-blend-mode`](https://developer.mozilla.org/fr/docs/Web/CSS/background-blend-mode) et des [`mix-blend-mode`](https://developer.mozilla.org/fr/docs/Web/CSS/mix-blend-mode) disponibles.
 
-## Cips et masques
+## Clips et masques
 
 Clipping et masking peuvent également aider à apporter un peu de variété à vos images. Ces deux principes se ressemblent en ce qu'ils servent tous les deux à cacher certaines parties d'un élément. Le support au niveau des navigateurs n'est pas identique mais [voici une page de test par Yoksel](https://codepen.io/yoksel/full/fsdbu/) pour vérifier par vous mêmes.
 
 - **masques**: sont des images. Avec `mask-mode: luminance;` les parties noires du masque sont cachés, les parties blanches sont visibles. Avec `mask-mode: alpha;` les parties opaques du masque sont visibles et les parties transparentes cachées.
 - **clips**: sont des formes. Ce qui est à l'intérieur de la forme est visible
+
+Voici un bon [résumé des choses sur CSS-Tricks](https://css-tricks.com/clipping-masking-css/). Comme cela date un peu, je vous invite à également regarder l doc de MDN à ce sujet: [`mask`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) et [`clip-path`](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path).
 
 ```css
 /* appliqué à une <img> */
@@ -547,8 +528,34 @@ Clipping et masking peuvent également aider à apporter un peu de variété à 
 ```css
 /* appliqué à une <img> */
 .clipped-polygon {
-  -webkit-clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
-  clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+  -webkit-clip-path: polygon(
+    20% 0%,
+    0% 20%,
+    30% 50%,
+    0% 80%,
+    20% 100%,
+    50% 70%,
+    80% 100%,
+    100% 80%,
+    70% 50%,
+    100% 20%,
+    80% 0%,
+    50% 30%
+  );
+  clip-path: polygon(
+    20% 0%,
+    0% 20%,
+    30% 50%,
+    0% 80%,
+    20% 100%,
+    50% 70%,
+    80% 100%,
+    100% 80%,
+    70% 50%,
+    100% 20%,
+    80% 0%,
+    50% 30%
+  );
 }
 ```
 
@@ -566,7 +573,7 @@ Clipping et masking peuvent également aider à apporter un peu de variété à 
 
 Les SVG et les polygones étant animables, ainsi que les images utilisées comme background, il est possible de réaliser des masques animés en CSS ou en JS.
 
-*Exercice: expérimenter avec clipping et masques dans Figma et en code*
+_Exercice: expérimenter avec clipping et masques dans Figma et en code_
 
 ## Animations JavaScript
 
@@ -594,28 +601,26 @@ Voici le HTML et le CSS utilisés pour quelques exemples très simples
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Animations GSAP</title>
-  <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animations GSAP</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <div class="box  js-box"></div>
 
-  <div class="box  js-box"></div>
+    <!-- lib -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js"></script>
 
-  <!-- lib -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js"></script>
-
-  <!-- script -->
-  <script src="js/anims.js"></script>
-</body>
+    <!-- script -->
+    <script src="js/anims.js"></script>
+  </body>
 </html>
 ```
 
 ```css
-.box
-{
+.box {
   width: 50px;
   height: 50px;
   background-color: red;
@@ -776,11 +781,15 @@ tl.to(myBox, {
   duration: 0.2
 });
 
-tl.to(myBox, {
-  backgroundColor: "red",
-  y: 0,
-  duration: 0.25
-}, "-=0.2");
+tl.to(
+  myBox,
+  {
+    backgroundColor: "red",
+    y: 0,
+    duration: 0.25
+  },
+  "-=0.2"
+);
 
 tl.play();
 ```
@@ -790,8 +799,7 @@ Les timelines peuvent aussi être utilisées de façon impriquées pour avoir un
 ```js
 // Self invoking function
 // Avoid variables collisions by scoping them
-(function(){
-
+(function () {
   // nested timelines
   // better for composing complex animations and overlap
   const myBox = document.querySelector(".js-box");
@@ -851,13 +859,12 @@ Les timelines peuvent aussi être utilisées de façon impriquées pour avoir un
     .add(four())
     .add(five());
   master.play();
-
 })();
 ```
 
 Voici un [exemple plus abouti](https://github.com/jeromecoupe/web_animations_demo) utilisant des timelines imbriquées pour gérer efficacement les diverses parties d'une animation complexe.
 
-*Exercice: décortiquer ensemble le script et voir comment les choses fonctionnent*
+_Exercice: décortiquer ensemble le script et voir comment les choses fonctionnent_
 
 ## Ressources
 
