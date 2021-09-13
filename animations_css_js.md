@@ -1,4 +1,4 @@
-# Transformations, animations et transitions
+# Animations CSS / JS
 
 ## Vendor prefixes et feature detection
 
