@@ -1,4 +1,4 @@
-# Cours IAD: Introduction aux transitions, transformations et animations CSS
+# Cours IAD: Animations et transitions CSS / JS
 
 Syllabus du cours donné à l'Institut des Arts de Diffusion par Jérôme Coupé.
 
