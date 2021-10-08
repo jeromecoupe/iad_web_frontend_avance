@@ -6,17 +6,17 @@ Même si le support des navigateurs est excellent, [animations](https://caniuse.
 
 Pour différencier les propriétés CSS encore en développement de celles qui font partie des recommandations du W3C, les divers navigateurs ont utilisé des extensions propriétaires qui se placent devant les propriétés CSS. Aujourd'hui, les choses ont changées et [les navigateurs utilisent d'avantage des flags](http://demosthenes.info/blog/217/CSS-Vendor-Prefixes-and-Flags).
 
-Des outils comme [Autoprefixer](https://github.com/postcss/autoprefixer) pour [Grunt](https://github.com/nDmitry/grunt-autoprefixer) ou [Gulp](https://www.npmjs.org/package/gulp-autoprefixer) peuvent vous aider à être certain de ne rien oublier. Des ressources comme [caniuse](http://caniuse.com/) et [html5please](http://html5please.com/) vous donneront quantités d'informations précieuses. Vous pouvez également utiliser des [feature queries](https://developer.mozilla.org/en-US/docs/Web/CSS/%40supports) avec `@supports`.
+Des outils comme [Autoprefixer](https://github.com/postcss/autoprefixer) peuvent vous aider à être certain de ne rien oublier. Des ressources comme [caniuse](http://caniuse.com/) et [html5please](http://html5please.com/) vous donneront quantités d'informations précieuses. Vous pouvez également utiliser des [feature queries](https://developer.mozilla.org/en-US/docs/Web/CSS/%40supports) avec `@supports`.
 
 ## Transformations CSS
 
 Les transformations CSS et l'opacité sont les deux propriétés les plus a utilisées pour des transitions et des animations. Animer seulement ces propriétés [permet de rester à 60 frames par seconde](https://medium.com/outsystems-experts/how-to-achieve-60-fps-animations-with-css3-db7b98610108) dans la mesure où les navigateurs utilisent le GPU.
 
-Utiliser la propriété `[will-change](https://developer.mozilla.org/en-US/docs/Web/CSS/will-change)` en CSS ou en javaScript permet au navigateur de préparer les transitions et ainsi d'améliorer les performances.
+Utiliser la propriété [`will-change`](https://developer.mozilla.org/en-US/docs/Web/CSS/will-change) en CSS ou en javaScript permet au navigateur de préparer les transitions et ainsi d'améliorer les performances.
 
 ### Transformations 2D
 
-Avec CSS3, nous disposons maintenant de propriétés nous permettant de faire subir des transformations aux éléments HTML. Ces propriétés sont supportées par [la plupart des navigateurs récents](http://caniuse.com/#feat=transforms2d) mais, dans la plupart des cas, [elles nécessitent d'utiliser des vendor prefixes](http://html5please.com/#transform).
+Avec CSS3, nous disposons maintenant de propriétés nous permettant de faire subir des transformations aux éléments HTML. Ces propriétés sont supportées par [la plupart des navigateurs récents](http://caniuse.com/#feat=transforms2d).
 
 L’ensemble de ces transformations ont lieu après que la page soit rendue et n’influencent donc pas le rendu de la page.
 
