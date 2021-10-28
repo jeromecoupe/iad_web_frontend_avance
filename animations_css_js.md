@@ -435,7 +435,7 @@ _Exemple: `animation-play-state` et classes manipulées via JavaScript._
 
 Avec l'aide Javascript, les transitions et animations CSS peuvent facilement être [déclenchées au scroll](http://dogstudio.be).
 
-`[IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver)` est une API native qui permet facilement de détecter si un ou plusieurs éléments sont en intersection avec d'autres éléments ou avec le viewport du navigateur pour déclencher des animations via quelques changements de classes CSS. Voici [une petite démonstration](https://github.com/jeromecoupe/onscroll_css_animations) rapide.
+[`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver) est une API native qui permet facilement de détecter si un ou plusieurs éléments sont en intersection avec d'autres éléments ou avec le viewport du navigateur pour déclencher des animations via quelques changements de classes CSS. Voici [une petite démonstration](https://jeromecoupe.github.io/onscroll_css_animations/) rapide.
 
 _Exercice: décortiquer le script et voir comment CSS et JS interagissent_
 
