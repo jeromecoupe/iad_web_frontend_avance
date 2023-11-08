@@ -1,24 +1,14 @@
 # Animations CSS / JS
 
-## Vendor prefixes et feature detection
-
-Même si le support des navigateurs est excellent, [animations](https://caniuse.com/#search=animations) et [transformations](https://caniuse.com/#search=transforms) ne sont pas toujours implémentées nativement dans certains navigateurs.
-
-Pour différencier les propriétés CSS encore en développement de celles qui font partie des recommandations du W3C, les divers navigateurs ont utilisé des extensions propriétaires qui se placent devant les propriétés CSS. Aujourd'hui, les choses ont changées et [les navigateurs utilisent d'avantage des flags](http://demosthenes.info/blog/217/CSS-Vendor-Prefixes-and-Flags).
-
-Des outils comme [Autoprefixer](https://github.com/postcss/autoprefixer) peuvent vous aider à être certain de ne rien oublier. Des ressources comme [caniuse](http://caniuse.com/) et [html5please](http://html5please.com/) vous donneront quantités d'informations précieuses. Vous pouvez également utiliser des [feature queries](https://developer.mozilla.org/en-US/docs/Web/CSS/%40supports) avec `@supports`.
-
 ## Transformations CSS
 
-Les transformations CSS et l'opacité sont les deux propriétés les plus a utilisées pour des transitions et des animations. Animer seulement ces propriétés [permet de rester à 60 frames par seconde](https://medium.com/outsystems-experts/how-to-achieve-60-fps-animations-with-css3-db7b98610108) dans la mesure où les navigateurs utilisent le GPU.
+Parmi toutes les propriétés pouvant faire l'objet de transitions ou d'animations, `transform` et `opacity` sont les deux propriétés les plus utilisées. Animer seulement ces propriétés [permet d'avoir des animations performantes](https://web.dev/articles/animations-guide).
 
-Utiliser la propriété [`will-change`](https://developer.mozilla.org/en-US/docs/Web/CSS/will-change) en CSS ou en javaScript permet au navigateur de préparer les transitions et ainsi d'améliorer les performances.
+Utiliser la propriété [`will-change`](https://developer.mozilla.org/en-US/docs/Web/CSS/will-change) en CSS ou en javaScript sur des éléments qui vont nécessairement faire l'objet d'animation ou de transitions permet au navigateur d'optimiser ses performances. Cette propriété ne doit pas être utilisée systématiquement mais uniquement en cas de problème de performance.
 
 ### Transformations 2D
 
-Avec CSS3, nous disposons maintenant de propriétés nous permettant de faire subir des transformations aux éléments HTML. Ces propriétés sont supportées par [la plupart des navigateurs récents](http://caniuse.com/#feat=transforms2d).
-
-L’ensemble de ces transformations ont lieu après que la page soit rendue et n’influencent donc pas le rendu de la page.
+Nous disposons maintenant de propriétés nous permettant de faire subir des transformations 2D aux éléments HTML. L’ensemble de ces transformations ont lieu après que la page soit rendue et n’influencent donc pas le rendu de la page.
 
 #### Translate
 
@@ -258,9 +248,9 @@ Les transitions CSS sont faciles à mettre en oeuvre et à manipuler via JavaScr
 - les transitions ne peuvent pas effectuer de loop ou d'itération. Si vous souhaitez une animation en boucle ou ayant plusieurs itérations, il faut vous tourner vers les animations.
 - les transitions ne sont pas réutilisables, les animations peuvent être appliquées à plusieurs éléments une fois définies.
 
-## Animations en CSS3
+## Animations en CSS
 
-Voyons maintenant comment créer de véritables animations en CSS3. Le processus comporte deux étapes distinctes.
+Voyons maintenant comment créer de véritables animations en CSS. Le processus comporte deux étapes distinctes.
 
 1. Définir votre animation
 2. L'assigner à un ou plusieurs éléments HTML
@@ -431,11 +421,49 @@ _Exemple: `animation-play-state` et classes manipulées via JavaScript._
 }
 ```
 
-### Déclenchement au scroll
+### Animations liées au scroll: scroll et view timelines
 
-Avec l'aide Javascript, les transitions et animations CSS peuvent facilement être [déclenchées au scroll](http://dogstudio.be).
+Les animations CSS peuvent être liées au scroll de deux façons via CSS: 
 
-[`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver) est une API native qui permet facilement de détecter si un ou plusieurs éléments sont en intersection avec d'autres éléments ou avec le viewport du navigateur pour déclencher des animations via quelques changements de classes CSS. Voici [une petite démonstration](https://jeromecoupe.github.io/onscroll_css_animations/) rapide.
+- scroll progress timeline: la timeline de l'animation est directement connectée au défilement (scroll) vertical ou horizontal d'un container 
+- view progress timeline: l'animation est directement liée à la position d'un élément dans le défilement (scroll) d'un container 
+
+En attendant le dévelopement d'outils dédiés dans les outiuls de dévelopement des navigateurs, [des outils de visualisation](https://scroll-driven-animations.style/#tools) permettent comprendre en détail le fonctionnment de ce type d'animations.
+
+Essentiellement, ces animations fonctionnent en utilisant `animation-timeline` et `animation-range` pour lier des animations css en keyframes aux éléments à animer.
+
+Attention, ces propriétés ne peuvent pas être précisées dans le cadre de la propriété courte `animation`. Il faut placer ces déclarations après les propriétés courtes dans vos CSS, sous peine de les voir remises à une valeur de `auto` par la propriété courte qui les suivrait. L'utilisation de propriétés détaillée permet de ne pas devoir tenir compte de l'ordre des déclarations.
+
+```css
+.c-progressbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 6px;
+  background-color: #b0957c;
+  z-index: 10;
+
+  animation-timeline: scroll(root block);
+  animation-name: progressGrow;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+```
+
+```css
+.a-imgreveal {
+  animation: imgReveal linear both;
+
+  animation-timeline: view(block);
+  animation-range: entry 33% entry 75%;
+}
+```
+
+### Animation déclenchées au scroll: IntersectionObserver
+
+Avec l'aide Javascript, les transitions et animations CSS peuvent facilement être déclenchées au scroll.
+
+[`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver) est une API native qui permet facilement de détecter si un ou plusieurs éléments sont en intersection avec d'autres éléments ou avec le viewport du navigateur pour déclencher des animations via quelques changements de classes CSS. Voici [une petite démonstration](https://github.com/jeromecoupe/scrolltriggered_css_animations) rapide.
 
 _Exercice: décortiquer le script et voir comment CSS et JS interagissent_
 
@@ -486,7 +514,8 @@ Clipping et masking peuvent également aider à apporter un peu de variété à 
 - **masques**: sont des images. Avec `mask-mode: luminance;` les parties noires du masque sont cachés, les parties blanches sont visibles. Avec `mask-mode: alpha;` les parties opaques du masque sont visibles et les parties transparentes cachées.
 - **clips**: sont des formes. Ce qui est à l'intérieur de la forme est visible
 
-Voici un bon [résumé des choses sur CSS-Tricks](https://css-tricks.com/clipping-masking-css/). Comme cela date un peu, je vous invite à également regarder l doc de MDN à ce sujet: [`mask`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) et [`clip-path`](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path).
+Voici un bon [résumé des choses sur CSS-Tricks](https://css-tricks.com/clipping-masking-css/). Comme cela date un peu, je vous invite à également regarder la doc de MDN à ce sujet: [`mask`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) et [`clip-path`](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path).
+
 
 ```css
 /* appliqué à une <img> */
@@ -632,7 +661,7 @@ Au niveau du code JavaScript, commençons par des Tweens simples. GSAP vous perm
 - `to`: utilise les caractéristiques de l'élément comme première frame du tween
 - `from`: utilise les caractéristiques de l'élément comme dernière frame du tween
 
-Dans tous les exemples donnés ici, nous utiliserons des transformations CSS3 pour les déplacements, dans la mesure où elles n'ont pas d'impact sur les autres éléments de la page, utilisent la carte graphique plutôt que le processeur et causent un minimum de repaints de la part du navigateur.
+Dans tous les exemples donnés ici, nous utiliserons des transformations CSS pour les déplacements, dans la mesure où elles n'ont pas d'impact sur les autres éléments de la page, utilisent la carte graphique plutôt que le processeur et causent un minimum de repaints de la part du navigateur.
 
 ### Tweens avec GSAP
 
