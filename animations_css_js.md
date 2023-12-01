@@ -423,16 +423,25 @@ _Exemple: `animation-play-state` et classes manipulées via JavaScript._
 
 ### Animations liées au scroll: scroll et view timelines
 
-Les animations CSS peuvent être liées au scroll de deux façons via CSS: 
+Les animations CSS peuvent être liées au scroll de deux façons via CSS:
 
-- scroll progress timeline: la timeline de l'animation est directement connectée au défilement (scroll) vertical ou horizontal d'un container 
-- view progress timeline: l'animation est directement liée à la position d'un élément dans le défilement (scroll) d'un container 
+- scroll progress timeline: la timeline de l'animation est directement connectée au défilement (scroll) vertical ou horizontal d'un container
+- view progress timeline: l'animation est directement liée à la position d'un élément dans le défilement (scroll) d'un container
 
 En attendant le dévelopement d'outils dédiés dans les outiuls de dévelopement des navigateurs, [des outils de visualisation](https://scroll-driven-animations.style/#tools) permettent comprendre en détail le fonctionnment de ce type d'animations.
 
 Essentiellement, ces animations fonctionnent en utilisant `animation-timeline` et `animation-range` pour lier des animations css en keyframes aux éléments à animer.
 
 Attention, ces propriétés ne peuvent pas être précisées dans le cadre de la propriété courte `animation`. Il faut placer ces déclarations après les propriétés courtes dans vos CSS, sous peine de les voir remises à une valeur de `auto` par la propriété courte qui les suivrait. L'utilisation de propriétés détaillée permet de ne pas devoir tenir compte de l'ordre des déclarations.
+
+#### Scroll timelines
+
+Permettent de lier une animation à un élément qui défile en utilisant la barre de scroll comme scrubber. La propriété `animation-timeline` a comme valeur une fonction `scroll()` qui prend deux paramètres:
+
+- l'élément dont le défilement est utilisé comme scroller (le défaut est le premier parent qui défile).
+- la direction dans laquelle le défilement doit être considéré.
+
+Un use case typique est une barre de progression pour la lecture d'un article ou d'un blogpost.
 
 ```css
 .c-progressbar {
@@ -450,12 +459,67 @@ Attention, ces propriétés ne peuvent pas être précisées dans le cadre de la
 }
 ```
 
+#### View timelines
+
+Permettent de lier une animation à un élément qui défile en examinant la position de cet élément par rapport à son scroller. La propriété `animation-timeline` a comme valeur une fonction `view()` qui prend comme paramètre la direction de définlement à considérer
+
+Par defaut, une view timeline commence lorsque le permier pixel de l'élément entre dans le scroller et se termine lorsque le dernier pixel le quitte. La propriété `animation-range` permet de modifier cette timeline par defaut.
+
+Dans l'exemple ci-dessous, la timeline commence lorsque l'élément est à 33% dans le scroller et se termine lorsque l'élément est a 75% affiché dans le scroller.
+
 ```css
 .a-imgreveal {
   animation: imgReveal linear both;
 
   animation-timeline: view(block);
   animation-range: entry 33% entry 75%;
+}
+```
+
+#### Timelines nommées
+
+Dans certains cas, il est nécessaire de référencer un élément précis come scroller à l'aide de timelines nommées à l'aide des propriétés `view-timeline-name`, `view-timeline-axis`, `scroll-timeline-name` et `scroll-timeline-axis`.
+
+```css
+.c-projects__item {
+  view-timeline-name: --projectTimeline;
+  view-timeline-axis: block;
+}
+
+.c-project {
+  animation: projectsIn 0.2s ease-out both;
+  animation-timeline: --projectTimeline;
+  animation-range: entry 25% entry 50%;
+}
+```
+
+#### Spécifier `animation-range` dans les keyframes
+
+Il est également possible de spécifier le range d'une animation liée au scroll directement dans les keyframes de l'animation. Cela permet entre-autres de lier plusieurs animations (entrée et sortie par exemple) à un seul élément.
+
+```css
+@keyframes animate-in-and-out {
+  entry 0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  entry 100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  exit 0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  exit 100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+#list-view li {
+  animation: linear animate-in-and-out;
+  animation-timeline: view();
 }
 ```
 
@@ -515,7 +579,6 @@ Clipping et masking peuvent également aider à apporter un peu de variété à 
 - **clips**: sont des formes. Ce qui est à l'intérieur de la forme est visible
 
 Voici un bon [résumé des choses sur CSS-Tricks](https://css-tricks.com/clipping-masking-css/). Comme cela date un peu, je vous invite à également regarder la doc de MDN à ce sujet: [`mask`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) et [`clip-path`](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path).
-
 
 ```css
 /* appliqué à une <img> */
@@ -675,7 +738,7 @@ gsap.to(myBox, {
   rotation: 180,
   x: 100,
   duration: 1,
-  backgroundColor: "#0000FF"
+  backgroundColor: "#0000FF",
 });
 ```
 
@@ -689,7 +752,7 @@ gsap.from(myBox, {
   rotation: 180,
   x: 100,
   duration: 1,
-  backgroundColor: "#0000FF"
+  backgroundColor: "#0000FF",
 });
 ```
 
@@ -702,14 +765,14 @@ gsap.fromTo(
   myBox,
   {
     rotation: 21,
-    backgroundColor: "#00FF00"
+    backgroundColor: "#00FF00",
   },
   {
     delay: 1,
     rotation: 180,
     x: 250,
     duration: 1,
-    backgroundColor: "#0000FF"
+    backgroundColor: "#0000FF",
   }
 );
 ```
@@ -721,7 +784,7 @@ const myBox = document.querySelector(".js-box");
 // spécifie les caractéristiques d'arrivée et de départ
 gsap.set(myBox, {
   rotation: 21,
-  backgroundColor: "#00FF00"
+  backgroundColor: "#00FF00",
 });
 
 gsap.to(myBox, {
@@ -729,7 +792,7 @@ gsap.to(myBox, {
   rotation: 180,
   x: 250,
   duration: 1,
-  backgroundColor: "#0000FF"
+  backgroundColor: "#0000FF",
 });
 ```
 
@@ -744,7 +807,7 @@ const myBox = document.querySelector(".js-box");
 gsap.to(myBox, {
   x: 100,
   ease: "elastic. out(1, 0.2)",
-  duration: 0.5
+  duration: 0.5,
 });
 ```
 
@@ -758,7 +821,7 @@ gsap.to(myBox, {
   x: 100,
   ease: "elastic. out(1, 0.2)",
   duration: 0.5,
-  delay: 1
+  delay: 1,
 });
 ```
 
@@ -772,7 +835,7 @@ const myBoxes = document.querySelectorAll(".js-box");
 gsap.to(myBoxes, {
   stagger: 0.1,
   rotation: 180,
-  x: 200
+  x: 200,
 });
 ```
 
@@ -789,25 +852,25 @@ tl.pause();
 
 tl.to(myBox, {
   x: 200,
-  duration: 0.5
+  duration: 0.5,
 });
 
 tl.to(myBox, {
   backgroundColor: "blue",
   rotation: 360,
   duration: 0.1,
-  repeat: 5
+  repeat: 5,
 });
 
 tl.to(myBox, {
   y: 200,
-  duration: 1
+  duration: 1,
 });
 
 tl.to(myBox, {
   backgroundColor: "green",
   x: 0,
-  duration: 0.2
+  duration: 0.2,
 });
 
 tl.to(
@@ -815,7 +878,7 @@ tl.to(
   {
     backgroundColor: "red",
     y: 0,
-    duration: 0.25
+    duration: 0.25,
   },
   "-=0.2"
 );
@@ -845,7 +908,7 @@ Les timelines peuvent aussi être utilisées de façon impriquées pour avoir un
       backgroundColor: "blue",
       rotation: 360,
       duration: 0.5,
-      repeat: 3
+      repeat: 3,
     });
     return tl;
   }
@@ -854,7 +917,7 @@ Les timelines peuvent aussi être utilisées de façon impriquées pour avoir un
     let tl = gsap.timeline();
     tl.to(myBox, {
       y: 200,
-      duration: 1
+      duration: 1,
     });
     return tl;
   }
@@ -864,7 +927,7 @@ Les timelines peuvent aussi être utilisées de façon impriquées pour avoir un
     tl.to(myBox, {
       backgroundColor: "green",
       x: 0,
-      duration: 0.25
+      duration: 0.25,
     });
     return tl;
   }
@@ -874,7 +937,7 @@ Les timelines peuvent aussi être utilisées de façon impriquées pour avoir un
     tl.to(myBox, {
       backgroundColor: "red",
       y: 0,
-      duration: 1
+      duration: 1,
     });
     return tl;
   }
@@ -912,6 +975,9 @@ _Exercice: décortiquer ensemble le script et voir comment les choses fonctionne
 - [Flashless animations](http://24ways.org/2012/flashless-animation/) - par Rachel Nabors sur 24ways
 - [How to Create Windows-8-like animations with CSS3 and jQuery](http://sarasoueidan.com/blog/windows8-animations/) - Par Sara Soueidan
 - [CSS Sprite Sheet Animations with steps()](http://blog.teamtreehouse.com/css-sprite-sheet-animations-steps) - par Guil Hernandez sur Treehouse
+- [Animate elements on scroll with Scroll-driven animations](https://developer.chrome.com/articles/scroll-driven-animations/) - par Bramus Van Damme
+- [animation-timeline](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timeline) - sur MDN
+- [Scroll-Driven Animations: demos and tools](https://scroll-driven-animations.style/) - par Bramus van Damme
 - [Web animation API](http://rachelnabors.com/waapi): ressources par Rachel Nabors
 - [Greensock / GSAP](https://greensock.com): le site de Greensock / GSAP
 - [Getting Started with GSAP](https://greensock.com/get-started-js): commencer avec GSAP (video)
