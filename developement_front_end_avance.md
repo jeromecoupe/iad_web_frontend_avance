@@ -1,14 +1,16 @@
-# Animations CSS / JS
+# Dévelopement front-end avancé
+
+Nous allons ici voir plusieurs techniques vous permettant de créer des sites plus interactifs, avec des layouts et les animations plus élaborées.
 
 ## Transformations CSS
 
 Parmi toutes les propriétés pouvant faire l'objet de transitions ou d'animations, `transform` et `opacity` sont les deux propriétés les plus utilisées. Animer seulement ces propriétés [permet d'avoir des animations performantes](https://web.dev/articles/animations-guide).
 
-Utiliser la propriété [`will-change`](https://developer.mozilla.org/en-US/docs/Web/CSS/will-change) en CSS ou en javaScript sur des éléments qui vont nécessairement faire l'objet d'animation ou de transitions permet au navigateur d'optimiser ses performances. Cette propriété ne doit pas être utilisée systématiquement mais uniquement en cas de problème de performance.
+Utiliser la propriété [`will-change`](https://developer.mozilla.org/en-US/docs/Web/CSS/will-change) en CSS ou en javaScript sur des éléments qui vont nécessairement faire l'objet d'animations ou de transitions permet au navigateur d'optimiser ses performances. Cette propriété ne doit pas être utilisée systématiquement mais uniquement en cas de problème de performance.
 
 ### Transformations 2D
 
-Nous disposons maintenant de propriétés nous permettant de faire subir des transformations 2D aux éléments HTML. L’ensemble de ces transformations ont lieu après que la page soit rendue et n’influencent donc pas le rendu de la page.
+Permettent de faire subir des transformations 2D aux éléments HTML. L’ensemble de ces transformations ont lieu après que la page soit rendue et n’influencent donc pas le rendu de la page.
 
 #### Translate
 
@@ -25,6 +27,22 @@ Effectue une translation, soit sur l’axe horizontal, soit sur l’axe vertical
 
 .myElement {
   transform: translate(100px, 20%);
+}
+```
+
+Une propriété individuelle peut aussi être utilisée. Trois valeurs peuvent être spécifiées, correspondant aux axes X et Y et Z. Si une seule valeur est spécifiée, elle est dupliquée pour les axes X et Y. La troisièmme valeur de translation (axe Z) correspond à la fonction `translate3d()`.
+
+```css
+.myElement {
+  translate: 100px 0;
+}
+
+.myElement {
+  transform: 0 20%;
+}
+
+.myElement {
+  transform: 0 0 -100px;
 }
 ```
 
@@ -46,9 +64,25 @@ Effectue une mise à l’échelle. Cette mise à l’échelle peut concerné la 
 }
 ```
 
+Une propriété individuelle (plus récente) peut aussi être utilisée. Trois valeurs peuvent être spécifiées, correspondant aux axes X et Y et Z. Si une seule valeur est spécifiée, elle est dupliquée pour les axes X et Y. La troisièmme valeur (axe Z) correspond à la fonction `scale3d()`.
+
+```css
+.myElement {
+  scale: 0.5;
+}
+
+.myElement {
+  scale: 2 0.5;
+}
+
+.myElement {
+  scale: 2 0.5 2;
+}
+```
+
 #### Rotate
 
-Effectue une rotation. Les valeurs spécifiées peuvent être positives ou négatives. Ces valeurs peuvent être spécifiées en degrés ou en nombre de tours
+La fonction rotate effectue une rotation. Les valeurs spécifiées peuvent être positives ou négatives. Ces valeurs peuvent être spécifiées en degrés ou en nombre de tours ainsi que pour différents axes.
 
 ```css
 .myElement {
@@ -60,6 +94,26 @@ Effectue une rotation. Les valeurs spécifiées peuvent être positives ou néga
 }
 ```
 
+Une propriété individuelle (plus récente) peut aussi être utilisée. Trois valeurs peuvent être spécifiées, correspondant aux axes X et Y et Z. Si une seule valeur est spécifiée, elle est dupliquée pour les axes X et Y. La troisièmme valeur (axe Z) correspond à la fonction `rotate3d()`.
+
+```css
+/* Valeur angulaire */
+.myElement {
+  rotate: 90deg;
+}
+
+/* Un axe x, y, z et l'angle associé */
+.myElement {
+  rotate: x 90deg;
+  rotate: y 90deg;
+}
+
+/* Un vecteur et l'angle associé */
+.myElement {
+  rotate: 1 1 1 90deg;
+}
+```
+
 #### Skew
 
 Effectue une distorsion de type “skew” spécifiée en degrés. Celle-ci peut être appliquée selon les axes horizontaux ou verticaux ou encore selon les deux à la fois. Les valeurs spécifiées peuvent être positives ou négatives.
@@ -67,6 +121,14 @@ Effectue une distorsion de type “skew” spécifiée en degrés. Celle-ci peut
 ```css
 .myElement {
   transform: skewY(30deg);
+}
+
+.myElement {
+  transform: skewX(30deg);
+}
+
+.myElement {
+  transform: skew(30deg);
 }
 ```
 
@@ -92,7 +154,7 @@ Nous pouvons également combiner différentes transformation en les chaînant et
 }
 ```
 
-_Exercice: expérimenter avec les transformation 2D en :hover_
+_Exercice: expérimenter avec les transformation 2D en :hover en réalisant plusieurs types de cartes_
 
 ### Transformations 3D
 
@@ -188,6 +250,8 @@ Dans ce cas la propriété `backface-visibility` permet de gérer la visibilité
 }
 ```
 
+_Exercice: expérimenter avec les transformation 3D en :hover en réalisant une carte qui les utilise_
+
 ## Transitions en CSS
 
 Les [transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/transition) permettent au navigateur de gérer la transition entre deux états d’un élément spécifiés par CSS. Voici [une liste des propriétés CSS pouvant être animées](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties).
@@ -247,6 +311,157 @@ Les transitions CSS sont faciles à mettre en oeuvre et à manipuler via JavaScr
 - les transitions se font toujours d'un état A vers un état B, sans étapes intermédiaires. Pour contrôler plus finement les étapes, il faut se tourner vers les animations CSS.
 - les transitions ne peuvent pas effectuer de loop ou d'itération. Si vous souhaitez une animation en boucle ou ayant plusieurs itérations, il faut vous tourner vers les animations.
 - les transitions ne sont pas réutilisables, les animations peuvent être appliquées à plusieurs éléments une fois définies.
+
+## Filtres
+
+Les filtres peuvent servir à appliquer des effets simples sur des élements du DOM, typiquement des images. Les filtres fonctionnent à l'aide de la propriété `filter` pour laquelle on spécifie comme valeur un type de filtre et une valeur.
+
+Vous pouvez vous référer à MDN pour une [liste complète des filtres disponibles](https://developer.mozilla.org/fr/docs/Web/CSS/filter).
+
+Il est également possible de réaliser des filtres plus complexes à l'aide de SVG et de les appliquer à votre contenu HTML. Voici un [bon tutoriel sur le sujet par Sara Soueidan](https://www.sarasoueidan.com/blog/svg-filters/).
+
+**exemples**
+
+```css
+.u-grayscale {
+  filter: grayscale(100%);
+}
+
+.u-blur {
+  filter: blur(3px);
+}
+```
+
+## Blend modes
+
+Les propriétés `background-blend-mode` et `mix-blend-mode` permettent de modifier vos images de façon importante, comme vous le feriez avec des calques dans une application graphique. `background-blend-mode` se charge faire un blend mode entre deux backgrounds, tandis que `mix-blend-mode` est utilisé pour gérer un blend mode entre un élément et un autre.
+
+```css
+/* mix blend mode */
+.o-blended-red {
+  display: inline-block;
+  background-color: red;
+}
+
+.o-blended-red > img {
+  filter: grayscale(1);
+  mix-blend-mode: multiply;
+  vertical-align: middle;
+}
+```
+
+Vous pouvez vous référer à MDN pour une liste complète des [`background-blend-mode`](https://developer.mozilla.org/fr/docs/Web/CSS/background-blend-mode) et des [`mix-blend-mode`](https://developer.mozilla.org/fr/docs/Web/CSS/mix-blend-mode) disponibles.
+
+## Clips et masques
+
+Clipping et masking peuvent également aider à apporter un peu de variété à vos images. Ces deux principes se ressemblent en ce qu'ils servent tous les deux à cacher certaines parties d'un élément. Le support au niveau des navigateurs n'est pas identique mais [voici une page de test par Yoksel](https://codepen.io/yoksel/full/fsdbu/) pour vérifier par vous mêmes.
+
+- **masques**: sont des images. Avec `mask-mode: luminance;` les parties noires du masque sont cachés, les parties blanches sont visibles. Avec `mask-mode: alpha;` les parties opaques du masque sont visibles et les parties transparentes cachées.
+- **clips**: sont des formes. Ce qui est à l'intérieur de la forme est visible
+
+Voici un bon [résumé des choses sur CSS-Tricks](https://css-tricks.com/clipping-masking-css/). Comme cela date un peu, je vous invite à également regarder la doc de MDN à ce sujet: [`mask`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) et [`clip-path`](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path).
+
+```css
+/* appliqué à une <img> */
+.masked {
+  mask-image: url(../img/masks-scribbles.svg);
+  mask-repeat: no-repeat;
+}
+```
+
+```css
+/* appliqué à une <img> (ne fontionne qu'avec un svg inclus dans le document pour Safari, Chrome et Opera) */
+
+/* SVG externe / lié au document */
+.clipped-svg {
+  clip-path: url(../img/clip.svg#myClip);
+}
+
+/* SVG interne au document */
+.clipped-svg {
+  clip-path: url(#myClip);
+}
+```
+
+```svg
+<svg width="137" height="130" viewBox="0 0 137 130" xmlns="http://www.w3.org/2000/svg">
+<title>Star</title>
+<defs>
+  <clipPath id="myClip">
+    <path fill="#D8D8D8" d="M68.5 107.25l-42.027 22.095L34.5 82.547.5 49.405l46.987-6.827L68.5 0l21.013 42.578 46.988 6.827-34 33.142 8.026 46.798z" fill-rule="evenodd"/>
+  </clipPath>
+</defs>
+</svg>
+```
+
+```css
+/* appliqué à une <img> */
+.clipped-polygon {
+  -webkit-clip-path: polygon(
+    20% 0%,
+    0% 20%,
+    30% 50%,
+    0% 80%,
+    20% 100%,
+    50% 70%,
+    80% 100%,
+    100% 80%,
+    70% 50%,
+    100% 20%,
+    80% 0%,
+    50% 30%
+  );
+  clip-path: polygon(
+    20% 0%,
+    0% 20%,
+    30% 50%,
+    0% 80%,
+    20% 100%,
+    50% 70%,
+    80% 100%,
+    100% 80%,
+    70% 50%,
+    100% 20%,
+    80% 0%,
+    50% 30%
+  );
+}
+```
+
+[Clippy de Bennett Feely](https://bennettfeely.com/clippy/) est un petit outil qui vous permettra de créer facilement des clip paths CSS.
+
+```css
+/* appliqué à une <img> */
+.c-gradient-text {
+  background-image: linear-gradient(to right, #e03d52, #ffb25b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+```
+
+Les SVG et les polygones étant animables, ainsi que les images utilisées comme background, il est possible de réaliser des masques animés en CSS ou en JS.
+
+_Exercice: expérimenter avec clipping et masques_
+
+## Videos
+
+L'un des éléements utilisés pour créer du mouvement dans les pages web sont les videos. La principale difficulté dans un contexte responsive consiste à avoir des videos qui prennent toute la place dans leur bloc conteneur. Pour cela on utilise classiquement une combinaison de différentes propriétés.
+
+```css
+.myVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+```
+
+_Exercices: expérimenter avec videos, masques, transformations et flitres_
 
 ## Animations en CSS
 
@@ -329,9 +544,9 @@ _Exercice: expérimenter avec les diverses valeurs de `animation-fill-mode`._
 
 _Exercice: expérimenter avec les diverses valeurs de `animation-direction`._
 
-## Notation courte et chaining
+### Notation courte et chaining
 
-Une notation courte existe évidemment pour appliquer vos animations à un élément HTML.
+Une notation courte existe aussi pour appliquer vos animations à un élément HTML.
 
 ```css
 animation: myAnimation 0.5s ease-in 1s 3;
@@ -345,10 +560,9 @@ Il est également possible de chaîner plusieurs animations sur un même éléme
 animation: myAnimation 1s ease-in-out 2s 4, myOtherAnimation 4s ease-out 2s;
 ```
 
-### Exercices
+### Animations image par image avec CSS
 
-- Voitures roulant à travers l'écran à différentes vitesses et dans différents sens
-- Animation image par image avec un sprite et `steps`. La marche à suivre est ici de réaliser un sprite. Créer une animations `@keyframes` allant du haut du sprite au bas du sprite à l'aide `background-position`. Enfin, spécifier un nombre d'étapes correspondant aux nombre d'images fixes dans le sprite.
+La marche à suivre est ici de réaliser un sprite. Créer une animations `@keyframes` allant du haut du sprite au bas du sprite à l'aide `background-position`. Enfin, spécifier un nombre d'étapes correspondant aux nombre d'images fixes dans le sprite.
 
 ```css
 @keyframes fly {
@@ -370,6 +584,8 @@ animation: myAnimation 1s ease-in-out 2s 4, myOtherAnimation 4s ease-out 2s;
   animation: fly 0.5s steps(4) infinite;
 }
 ```
+
+Exemples: [animation de chat](https://codepen.io/SoyEva/pen/LRjWze) et [cycle de marche](https://w3bits.com/css-spritesheet-animation/) en utilisant `steps()`. Site du [KiKK Festival 2020](https://2020.kikk.be/en/home).
 
 ### Démarrer et arrêter une animation avec `animation-play-state`
 
@@ -531,143 +747,7 @@ Avec l'aide Javascript, les transitions et animations CSS peuvent facilement êt
 
 _Exercice: décortiquer le script et voir comment CSS et JS interagissent_
 
-## Filtres
-
-Les filtres peuvent servir à appliquer des effets simples sur des élements du DOM, typiquement des images. Les filtres fonctionnent à l'aide de la propriété `filter` pour laquelle on spécifie comme valeur un type de filtre et une valeur.
-
-Vous pouvez vous référer à MDN pour une [liste complète des filtres disponibles](https://developer.mozilla.org/fr/docs/Web/CSS/filter).
-
-Il est également possible de réaliser des filtres plus complexes à l'aide de SVG et de les appliquer à votre contenu HTML. Voici un [bon tutoriel sur le sujet par Sara Soueidan](https://www.sarasoueidan.com/blog/svg-filters/).
-
-**exemples**
-
-```css
-.u-grayscale {
-  filter: grayscale(100%);
-}
-
-.u-blur {
-  filter: blur(3px);
-}
-```
-
-## Blend modes
-
-Les propriétés `background-blend-mode` et `mix-blend-mode` permettent de modifier vos images de façon importante, comme vous le feriez avec des calques dans une application graphique. `background-blend-mode` se charge faire un blend mode entre deux backgrounds, tandis que `mix-blend-mode` est utilisé pour gérer un blend mode entre un élément et un autre.
-
-```css
-/* mix blend mode */
-.o-blended-red {
-  display: inline-block;
-  background-color: red;
-}
-
-.o-blended-red > img {
-  filter: grayscale(1);
-  mix-blend-mode: multiply;
-  vertical-align: middle;
-}
-```
-
-Vous pouvez vous référer à MDN pour une liste complète des [`background-blend-mode`](https://developer.mozilla.org/fr/docs/Web/CSS/background-blend-mode) et des [`mix-blend-mode`](https://developer.mozilla.org/fr/docs/Web/CSS/mix-blend-mode) disponibles.
-
-## Clips et masques
-
-Clipping et masking peuvent également aider à apporter un peu de variété à vos images. Ces deux principes se ressemblent en ce qu'ils servent tous les deux à cacher certaines parties d'un élément. Le support au niveau des navigateurs n'est pas identique mais [voici une page de test par Yoksel](https://codepen.io/yoksel/full/fsdbu/) pour vérifier par vous mêmes.
-
-- **masques**: sont des images. Avec `mask-mode: luminance;` les parties noires du masque sont cachés, les parties blanches sont visibles. Avec `mask-mode: alpha;` les parties opaques du masque sont visibles et les parties transparentes cachées.
-- **clips**: sont des formes. Ce qui est à l'intérieur de la forme est visible
-
-Voici un bon [résumé des choses sur CSS-Tricks](https://css-tricks.com/clipping-masking-css/). Comme cela date un peu, je vous invite à également regarder la doc de MDN à ce sujet: [`mask`](https://developer.mozilla.org/en-US/docs/Web/CSS/mask) et [`clip-path`](https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path).
-
-```css
-/* appliqué à une <img> */
-.masked {
-  -webkit-mask-image: url(../img/masks-scribbles.svg);
-  mask-image: url(../img/masks-scribbles.svg);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-}
-```
-
-```css
-/* appliqué à une <img> (ne fontionne qu'avec un svg inclus dans le document pour Safari, Chrome et Opera) */
-
-/* SVG externe / lié au document */
-.clipped-svg {
-  -webkit-clip-path: url(../img/clip.svg#myClip);
-  clip-path: url(../img/clip.svg#myClip);
-}
-
-/* SVG interne au document */
-.clipped-svg {
-  -webkit-clip-path: url(#myClip);
-  clip-path: url(#myClip);
-}
-```
-
-```svg
-<svg width="137" height="130" viewBox="0 0 137 130" xmlns="http://www.w3.org/2000/svg">
-<title>Star</title>
-<defs>
-  <clipPath id="myClip">
-    <path fill="#D8D8D8" d="M68.5 107.25l-42.027 22.095L34.5 82.547.5 49.405l46.987-6.827L68.5 0l21.013 42.578 46.988 6.827-34 33.142 8.026 46.798z" fill-rule="evenodd"/>
-  </clipPath>
-</defs>
-</svg>
-```
-
-```css
-/* appliqué à une <img> */
-.clipped-polygon {
-  -webkit-clip-path: polygon(
-    20% 0%,
-    0% 20%,
-    30% 50%,
-    0% 80%,
-    20% 100%,
-    50% 70%,
-    80% 100%,
-    100% 80%,
-    70% 50%,
-    100% 20%,
-    80% 0%,
-    50% 30%
-  );
-  clip-path: polygon(
-    20% 0%,
-    0% 20%,
-    30% 50%,
-    0% 80%,
-    20% 100%,
-    50% 70%,
-    80% 100%,
-    100% 80%,
-    70% 50%,
-    100% 20%,
-    80% 0%,
-    50% 30%
-  );
-}
-```
-
-[Clippy de Bennett Feely](https://bennettfeely.com/clippy/) est un petit outil qui vous permettra de créer facilement des clip paths CSS.
-
-```css
-/* appliqué à une <img> */
-.c-gradient-text {
-  background-image: linear-gradient(to right, #e03d52, #ffb25b);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-```
-
-Les SVG et les polygones étant animables, ainsi que les images utilisées comme background, il est possible de réaliser des masques animés en CSS ou en JS.
-
-_Exercice: expérimenter avec clipping et masques dans Figma et en code_
-
-## Animations JavaScript
+## Animations JavaScript avec GSAP
 
 Les animations en Javascript offrent bien plus de contrôle que les animations CSS si vous avez besoin d'interactivité, d'effets poussé ou de séquences d'animations chainées les unes aux autres.
 
@@ -695,9 +775,13 @@ Voici le HTML et le CSS utilisés pour quelques exemples très simples
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
     <title>Animations GSAP</title>
-    <link rel="stylesheet" href="css/main.css" />
+    <link
+      rel="stylesheet"
+      href="css/main.css" />
   </head>
   <body>
     <div class="box  js-box"></div>
@@ -957,6 +1041,200 @@ Les timelines peuvent aussi être utilisées de façon impriquées pour avoir un
 Voici un [exemple plus abouti](https://github.com/jeromecoupe/web_animations_demo) utilisant des timelines imbriquées pour gérer efficacement les diverses parties d'une animation complexe.
 
 _Exercice: décortiquer ensemble le script et voir comment les choses fonctionnent_
+
+## Images responsives et chargement performant
+
+Il est imprtant de bien spécifier certaines choses dans le HTML pour optimiser au maximim le chgargement et l'affichage de vos images.
+
+- Attributs width et weight et valeurs (maximum) de l'image spécifiées dans le HTML.
+- Attribut `decoding` et la valeur `async` permet au navigateur de décoder l'image en parallèle, hors de la thread principale, optimisant ainsi les ressources de votre navigateur.
+- Attribut `loading` et valeur `lazy` pour charger les images hors du viewport uniquement quand elles y entrent. Utiliser cet attribut et cette valeur pour des images qui sont affichées dans le viewport lorsque la page est chargée est contre-productif.
+
+```html
+<img
+  class="o-fluidimage"
+  src="img/monimage.png"
+  alt="mon image"
+  width="800"
+  height="800"
+  decoding="async"
+  loading="lazy" />
+```
+
+Quelques lignes de CSS suffisent ensuite à ce que les images prennent au maximum tout l’espace disponible dans leur bloc conteneur. C’est donc la taille du bloc conteneur qui va définir la taille de l’image.
+
+```css
+.o-fluidimage {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+```
+
+Ceci fonctionne tant que vous images restent toujours plus grandes que leurs blocs conteneurs. Si vous souhaitez que celles-ci s’étendent toujours pour occuper leur bloc conteneur, vous pouvez ajouter et utiliser les règles suivantes.
+
+```css
+.o-fluidimage--full {
+  width: 100%;
+}
+```
+
+Pour éviter de faire consommer de la bande passante inutilement, il faut servir des images de tailles différentes suivant la plateforme. Les attributs `srcset` et `sizes` ainsi que l'élément `<picture>` permettent de résoudre ces problématiques.
+
+Au niveau des images, assurez-vous tout d'abord d’utiliser des services tels que [ImageOptim](http://imageoptim.com/) ou [Smush.it](http://www.smushit.com/ysmush.it/) pour optimiser vos images.
+
+Les outils de build tels que Grunt et Gulp que nous verrons l’année prochaine permettent également d’optimiser vos images automatiquement à l'aide de scripts.
+
+### Images de background
+
+En ce qui concerne les images de background, vous pouvez utiliser des media queries dans vos CSS pour servir une petite image par défaut et servir une plus grande image lorsque le layout l’exige.
+
+Attention cependant, les deux images sont parfois téléchargées. Voir à ce sujet l'article très complet de Tim Kadlec ["Media Query & Asset Downloading Results"](http://timkadlec.com/2012/04/media-query-asset-downloading-results/).
+
+```css
+.banner {
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.banner--home {
+  background-image: url(../img/banners/banner-home-800.jpg);
+}
+
+@media all and (min-width: 800px) {
+  .banner--home {
+    background-image: url(../img/banners/banner-home-1024.jpg);
+  }
+}
+
+@media all and (min-width: 1024px) {
+  .banner--home {
+    background-image: url(../img/banners/banner-home-1500.jpg);
+  }
+}
+```
+
+### Images de contenu: `srcset`, `sizes` et `<picture>`
+
+La situation est un peu plus complexe au niveau des images de contenus. [Une solution idéale pour les images responsives](http://responsiveimages.org/) doit relever les [défis suivants](http://usecases.responsiveimages.org/):
+
+1. Différentes images servies selon la densité d'écran
+2. Différentes images servies selon la taille d'écran
+3. Art direction (cadrage)
+
+Les navigateurs qui ne supportent pas `srcset`, `sizes` ou `picture` servent simplement l'image spécifiée par l'attribut `src`..
+
+#### `srcset` and `sizes`
+
+Les attributs `srcset` et `sizes` permettent de fournir au navigateur toutes les informations nécessaires pour choisir l'image à servir en fonction de la taille de l'écran ou de sa densité. Cette approche nécessite de connaître la façon dont les images vont s'afficher dans votre layout.
+
+Ces attributs sont suffisants si vous ne devez pas prendre en compte de différence de cadrage mais que vous avez seulement affaire à des images identiques hormis en ce qui concerne la taille.
+
+**Différentes tailles d'images:**
+
+```html
+<img
+  src="small.jpg"
+  srcset="large.jpg 1024w, medium.jpg 640w, small.jpg 320w"
+  sizes="(min-width: 750px) 33.3vw,
+            100vw"
+  width="1024"
+  height="768"
+  loading="lazy"
+  decoding="async"
+  alt="alternative representation" />
+```
+
+- `src` valeur par défaut pour les navigateurs ne supportant pas `srcset`. C'est la valeur de cette propriété de le navigateur va venir changer en fonction des informations passées pa `srcset` (images disponibles et taille) et pas `sizes` (information relatives à l'affichage).
+- `srcset` spécifie différentes images et la largeur de chacune d'entre-elles. Les valeurs pour `w` font référence à la taille actuelle de l'image en pixels.
+- `sizes` spécifie la largeur de l'image par rapport au viewport pour chacune des media-queries spécifiées dans les paires media query / valeur. La dernière valeur est une valeur par défaut.
+
+Ces informations permettent aux navigateurs de choisir l'image adéquate en fonction à la fois de la taille d'affichage de l'image et de la densité de l'écran sur lequel elle est affichée.
+
+Les attributs `loading` et `decoding` sont utiles pour la performance.
+
+- `loading="lazy"`: donne l'instruction au navigateur de ne charger les images que lorsqu'elles sont afficher dans le viewport du navigateur. Attention à n'utiliser cet attribut que pour des images ou des iframe qui sont affichées hors écran.
+- `decoding="async"`: donne l'instruction au navigateur de continuer à charger le contenu de la page, même si l'image n'est pas encore tout à fait chargée.
+
+#### `<picture>` et art direction
+
+Si vous devez servir des images différentes sur le plan de la composition (cadrage, orientation, art direction) vous pouvez alors utiliser les éléments `<picture>` et `<source>`. Voici un exemple simple:
+
+```html
+<picture>
+  <source
+    media="(min-width: 1024px)"
+    srcset="obama-fullshot.jpg" />
+  <img
+    src="obama-closeup.jpg"
+    loading="lazy"
+    decoding="async"
+    alt="Obama seals the deal" />
+</picture>
+```
+
+Notez bien que `<picture>`, `<source>`, `srcset` et `sizes` peuvent être combinés avec ce dont nous avons parlé précédemment.
+
+```html
+<picture>
+  <source
+    media="(min-width: 750px)"
+    srcset="large.jpg 1024w, medium.jpg 640w, small.jpg 320w"
+    sizes="33.3vw" />
+  <source
+    srcset="
+      large-cropped.jpg  1024w,
+      medium-cropped.jpg  640w,
+      small-cropped.jpg   320w
+    "
+    sizes="100vw" />
+  <img
+    src="small-cropped.jpg"
+    loading="lazy"
+    decoding="async"
+    alt="alternative representation" />
+</picture>
+```
+
+Le sujet de images responsives est assez complexe. Je ne peux que vous recommander quelques ressources abordant le sujet en détail: un [article de Eric Portis pour Smashing Magazine](http://www.smashingmagazine.com/2014/05/14/responsive-images-done-right-guide-picture-srcset/), et deux autres excellents articles publiés sur Opera Dev.
+
+- [Native Responsive Images](https://dev.opera.com/articles/native-responsive-images/) par Yoav Weiss
+- [Responsive Images: Use Cases and Documented Code Snippets](https://dev.opera.com/articles/responsive-images/) par Andreas Bovens
+
+A lire également, une série d'articles très complets de Jason Grigsby sur Cloudfour: [Responsive Images 101](http://blog.cloudfour.com/responsive-images-101-definitions/)
+
+Exercices
+
+- _Mélanger flexbox et grid en réalisant une grille fluide de cartes de produits (image, titre, description, prix) pour un site de e-commerce_
+
+## Vidéos responsives
+
+Il est également possible d’intégrer des vidéos à vos pages de façon fluide. Si vous travaillez avec le tag `video`, la solution est assez simple et ressemble à celle adoptée pour les images.
+
+```css
+.fluidvideo {
+  aspect-ratio: 16 / 9;
+  max-width: 100%;
+  height: auto;
+}
+```
+
+Afin de servir des videos adaptées à tous les terminaux, que ce soit sur le plan des formats ou de la taille d'affichage, des services tels que Youtube et Vimeo sont intéressants et très utilisés.
+
+La propriété CSS [`aspect-ratio`](https://developer.mozilla.org/fr/docs/Web/CSS/aspect-ratio) permet d'utiliser un code simple suivant le ratio de votre video.
+
+```css
+.video-container {
+  aspect-ratio: 16 / 9;
+  background-color: black;
+
+  & > iframe {
+    width: 100%;
+    height: 100%;
+  }
+}
+```
 
 ## Ressources
 
