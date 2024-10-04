@@ -1042,7 +1042,7 @@ Voici un [exemple plus abouti](https://github.com/jeromecoupe/web_animations_dem
 
 _Exercice: décortiquer ensemble le script et voir comment les choses fonctionnent_
 
-## Images responsives et chargement performant
+## Images responsives et performance
 
 Il est imprtant de bien spécifier certaines choses dans le HTML pour optimiser au maximim le chgargement et l'affichage de vos images.
 
@@ -1235,6 +1235,10 @@ La propriété CSS [`aspect-ratio`](https://developer.mozilla.org/fr/docs/Web/CS
   }
 }
 ```
+
+## Grilles complexes
+
+@TODO
 
 ## Ressources
 
