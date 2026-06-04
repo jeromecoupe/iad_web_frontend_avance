@@ -302,7 +302,7 @@ ou
 
 _Exercice: expérimenter avec les transitions en :hover_
 
-Les transitions sont également souvent déclenchées à l'aide de JavaScript. Pour cela, il vous faudra sélectionner vos éléments ([querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector), [querySelectorAll](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll)) et ajouter ou supprimer des classes dans votre HTML ([API classList](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList)) lors du déclenchement d'un événement ([eventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventListener)), par exemple un click.
+Les transitions peuvent également être déclenchées à l'aide de JavaScript. Pour cela, il vous faudra sélectionner vos éléments ([querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector), [querySelectorAll](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll)) et ajouter ou supprimer des classes dans votre HTML ([API classList](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList)) lors du déclenchement d'un événement ([eventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventListener)), par exemple un click.
 
 Voyons ensemble comment créer un menu de navigation déclenché par un click sur une icône "hamburger". Ce menu va venir "pousser" le contenu de la page.
 
