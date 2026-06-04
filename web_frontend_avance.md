@@ -4,7 +4,7 @@ Nous allons ici voir plusieurs techniques vous permettant de créer des sites pl
 
 ## Transformations CSS
 
-Parmi toutes les propriétés pouvant faire l'objet de transitions ou d'animations, `transform` et `opacity` sont les deux propriétés les plus utilisées. Animer seulement ces propriétés [permet d'avoir des animations performantes](https://web.dev/articles/animations-guide).
+Parmi toutes les propriétés pouvant faire l'objet de transitions ou d'animations, les transformations et l'opacité sont les propriétés les plus utilisées. Animer seulement ces propriétés [permet d'avoir des animations performantes](https://web.dev/articles/animations-guide).
 
 Utiliser la propriété [`will-change`](https://developer.mozilla.org/en-US/docs/Web/CSS/will-change) en CSS ou en javaScript sur des éléments qui vont nécessairement faire l'objet d'animations ou de transitions permet au navigateur d'optimiser ses performances. Cette propriété ne doit pas être utilisée systématiquement mais uniquement en cas de problème de performance.
 
@@ -64,7 +64,7 @@ Effectue une mise à l’échelle. Cette mise à l’échelle peut concerné la 
 }
 ```
 
-Une propriété individuelle (plus récente) peut aussi être utilisée. Trois valeurs peuvent être spécifiées, correspondant aux axes X et Y et Z. Si une seule valeur est spécifiée, elle est dupliquée pour les axes X et Y. La troisièmme valeur (axe Z) correspond à la fonction `scale3d()`.
+Une propriété individuelle peut aussi être utilisée. Trois valeurs peuvent être spécifiées, correspondant aux axes X et Y et Z. Si une seule valeur est spécifiée, elle est dupliquée pour les axes X et Y. La troisièmme valeur (axe Z) correspond à la fonction `scale3d()`.
 
 ```css
 .myElement {
@@ -292,7 +292,9 @@ ou
 
 ```css
 .myElement {
-  transition: background-color 0.25s 0.1s ease-in, transform 0.5s 0.2s ease-out;
+  transition:
+    background-color 0.25s 0.1s ease-in,
+    transform 0.5s 0.2s ease-out;
 }
 ```
 
@@ -397,20 +399,6 @@ Voici un bon [résumé des choses sur CSS-Tricks](https://css-tricks.com/clippin
 ```css
 /* appliqué à une <img> */
 .clipped-polygon {
-  -webkit-clip-path: polygon(
-    20% 0%,
-    0% 20%,
-    30% 50%,
-    0% 80%,
-    20% 100%,
-    50% 70%,
-    80% 100%,
-    100% 80%,
-    70% 50%,
-    100% 20%,
-    80% 0%,
-    50% 30%
-  );
   clip-path: polygon(
     20% 0%,
     0% 20%,
@@ -479,10 +467,10 @@ Les étapes de votre animations peuvent soit être décrites à l'aide des mots-
 ```css
 @keyframes move {
   from {
-    transform: translateX(0);
+    translate: -100% 0;
   }
   to {
-    transform: translateX(400px);
+    translate: 100% 0;
   }
 }
 ```
@@ -490,13 +478,13 @@ Les étapes de votre animations peuvent soit être décrites à l'aide des mots-
 ```css
 @keyframes move {
   0% {
-    transform: translateX(0);
+    translate: -100% 0;
   }
   20% {
-    transform: translateX(100px);
+    translate: 0 0;
   }
   100% {
-    transform: translateX(400px);
+    translate: 100% 0;
   }
 }
 ```
@@ -552,12 +540,14 @@ Une notation courte existe aussi pour appliquer vos animations à un élément H
 animation: myAnimation 0.5s ease-in 1s 3;
 ```
 
-Dans l'ordre: <`animation-name`> <`animation-duration`> <`animation-timing-function`> <`animation-delay`> <`animation-iteration-count`>.
+Dans l'ordre: `animation-name` `animation-duration` `animation-timing-function` `animation-delay` `animation-iteration-count`.
 
 Il est également possible de chaîner plusieurs animations sur un même élément.
 
 ```css
-animation: myAnimation 1s ease-in-out 2s 4, myOtherAnimation 4s ease-out 2s;
+animation:
+  myAnimation 1s ease-in-out 2s 4,
+  myOtherAnimation 4s ease-out 2s;
 ```
 
 ### Animations image par image avec CSS
@@ -597,11 +587,8 @@ _Exemple: `animation-play-state` et `:hover`_
 
 ```css
 @keyframes spin {
-  0% {
-    transform: rotate(0);
-  }
-  100% {
-    transform: rotate(1turn);
+  to {
+    rotate: 1turn;
   }
 }
 
@@ -618,15 +605,6 @@ _Exemple: `animation-play-state` et `:hover`_
 _Exemple: `animation-play-state` et classes manipulées via JavaScript._
 
 ```css
-@keyframes spin {
-  0% {
-    transform: rotate(0);
-  }
-  100% {
-    transform: rotate(1turn);
-  }
-}
-
 .sticker {
   animation: spin 5s linear infinite;
   animation-play-state: paused;
@@ -684,7 +662,7 @@ Par defaut, une view timeline commence lorsque le permier pixel de l'élément e
 Dans l'exemple ci-dessous, la timeline commence lorsque l'élément est à 33% dans le scroller et se termine lorsque l'élément est a 75% affiché dans le scroller.
 
 ```css
-.a-imgreveal {
+.imgreveal {
   animation: imgReveal linear both;
 
   animation-timeline: view(block);
@@ -733,15 +711,40 @@ Il est également possible de spécifier le range d'une animation liée au scrol
   }
 }
 
-#list-view li {
+.c-list-view li {
   animation: linear animate-in-and-out;
   animation-timeline: view();
 }
 ```
 
+### Animation déclenchées au scroll: CSS
+
+Les animations CSS peuvent également être déclenchées au scroll plutôt que d'être liées à un scroller. C'est encore expérimental mais fonctionne déjà dans les navigateurs basés sur Chromium. Pour les utiliser, il faut dans un premier temps définir un "trigger", sa source et son range.
+
+```css
+[data-scrollanim] {
+  timeline-trigger-name: --t;
+  timeline-trigger-source: view();
+  timeline-trigger-activation-range: entry 0% exit 100%;
+}
+```
+
+Vous pouvez ensuite ajouter une animation CSS classique qui se déclenchera lorsque le trigger sera dans son état actif.
+
+```css
+[data-scrollanim="reveal"] {
+  animation-name: reveal;
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+  animation-trigger: --t play-once;
+}
+```
+
+Si vous devez gérer du "stagger", des délais différents, vous pouvez faire appel à `sibling-index()` et `sibling-count()`.
+
 ### Animation déclenchées au scroll: IntersectionObserver
 
-Avec l'aide Javascript, les transitions et animations CSS peuvent facilement être déclenchées au scroll.
+Les transitions et animations CSS peuvent facilement être déclenchées au scroll avec JavaScript.
 
 [`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver) est une API native qui permet facilement de détecter si un ou plusieurs éléments sont en intersection avec d'autres éléments ou avec le viewport du navigateur pour déclencher des animations via quelques changements de classes CSS. Voici [une petite démonstration](https://github.com/jeromecoupe/scrolltriggered_css_animations) rapide.
 
@@ -751,294 +754,7 @@ _Exercice: décortiquer le script et voir comment CSS et JS interagissent_
 
 Les animations en Javascript offrent bien plus de contrôle que les animations CSS si vous avez besoin d'interactivité, d'effets poussé ou de séquences d'animations chainées les unes aux autres.
 
-Des librairies telles que [GSAP de Greensock](https://greensock.com/gsap) offrent une grande facilité d'utilisation et permettent de créer des animations complexes avec SVG, HTML ou Canvas. Ces librairies sont extérieures aux navigateurs mais offrent une grande palette de possibilités aux dévelopeurs. En voici un petit [exemple avec un formulaire de login](https://github.com/jeromecoupe/web_animations_demo).
-
-Au niveau des navigateurs justement, [Web animation API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API) est un standard qui se développe bien et dont les fonctions de bases bénéficient d'un bon support dans les navigateurs récents. Cette spécification est déjà intéressante à utiliser aujourd'hui et deviendra encore plus importante lorsque le support des navigateurs augmentera pour les fonctions avancées (séquences et timeline). Il est également possible d'utiliser `requestAnimationFrame`, qui est plus complexe à gérer au niveau performance mais vous permet de créer à peu près n'importe quelle animation.
-
-L'animation est devenue une part importante des interfaces et du web en général, en partie parce que nous y sommes habitués sur les plateformes mobiles natives comme iOS ou Androïd.
-
-Comme à son habitude, le web intègre cela et avance en direction d'une expérience utilisateur plus riches dans lesquelles l'animation devient de plus en plus importante.
-
-Comme dit plus haut, la librairie [Greensock / GSAP](https://greensock.com/) est le standard du moment et offre les avantages suivants:
-
-- facile d'utilisation
-- attention accordée à la performance (versions light et max)
-- fonctionnalités impressionnantes
-- bonnes ressources et tutoriaux
-- possibilité d'[animer également les SVG](https://greensock.com/svg-tips)
-- gestion des inconsistances dans les navigateurs.
-
-Voici le HTML et le CSS utilisés pour quelques exemples très simples
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0" />
-    <title>Animations GSAP</title>
-    <link
-      rel="stylesheet"
-      href="css/main.css" />
-  </head>
-  <body>
-    <div class="box  js-box"></div>
-
-    <!-- lib -->
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js"></script>
-
-    <!-- script -->
-    <script src="js/anims.js"></script>
-  </body>
-</html>
-```
-
-```css
-.box {
-  width: 50px;
-  height: 50px;
-  background-color: red;
-}
-```
-
-Au niveau du code JavaScript, commençons par des Tweens simples. GSAP vous permet de réaliser des Tweens de deux façons différentes:
-
-- `to`: utilise les caractéristiques de l'élément comme première frame du tween
-- `from`: utilise les caractéristiques de l'élément comme dernière frame du tween
-
-Dans tous les exemples donnés ici, nous utiliserons des transformations CSS pour les déplacements, dans la mesure où elles n'ont pas d'impact sur les autres éléments de la page, utilisent la carte graphique plutôt que le processeur et causent un minimum de repaints de la part du navigateur.
-
-### Tweens avec GSAP
-
-```js
-const myBox = document.querySelector(".js-box");
-
-// To tween
-// utilise les caractéristiques de départ
-// spécifie les caractéristiques d'arrivée
-gsap.to(myBox, {
-  rotation: 180,
-  x: 100,
-  duration: 1,
-  backgroundColor: "#0000FF",
-});
-```
-
-```js
-const myBox = document.querySelector(".js-box");
-
-// From tween
-// utilise les caractéristiques d'arrivée
-// spécifie les caractéristiques de départ
-gsap.from(myBox, {
-  rotation: 180,
-  x: 100,
-  duration: 1,
-  backgroundColor: "#0000FF",
-});
-```
-
-```js
-const myBox = document.querySelector(".js-box");
-
-// toFrom tween
-// spécifie les caractéristiques d'arrivée et de départ
-gsap.fromTo(
-  myBox,
-  {
-    rotation: 21,
-    backgroundColor: "#00FF00",
-  },
-  {
-    delay: 1,
-    rotation: 180,
-    x: 250,
-    duration: 1,
-    backgroundColor: "#0000FF",
-  }
-);
-```
-
-```js
-const myBox = document.querySelector(".js-box");
-
-// Using set
-// spécifie les caractéristiques d'arrivée et de départ
-gsap.set(myBox, {
-  rotation: 21,
-  backgroundColor: "#00FF00",
-});
-
-gsap.to(myBox, {
-  delay: 1,
-  rotation: 180,
-  x: 250,
-  duration: 1,
-  backgroundColor: "#0000FF",
-});
-```
-
-Avec GSAP, nous pouvons donc modifier différentes propriétés CSS à la fois et animer quasiment toutes les propriétés CSS, même si il est conseillé de se limiter le plus possible a `transfrom` et `opacity` pour des raisons de performance. La notation est souvent la même que celle des propriétés CSS mais en `camelCase`.
-
-Vous avez également à votre disposition une [large bibliothèque de fonctions d'Easing](https://greensock.com/docs/Easing) et vous pouvez définir vos propres effets avec [CustomBounce](https://greensock.com/docs/Easing/CustomBounce), [CustomEase](https://greensock.com/docs/Easing/CustomEase) et [CustomWiggle](https://greensock.com/docs/Easing/CustomWiggle).
-
-```js
-const myBox = document.querySelector(".js-box");
-
-// To tween
-gsap.to(myBox, {
-  x: 100,
-  ease: "elastic. out(1, 0.2)",
-  duration: 0.5,
-});
-```
-
-La gestion des délais est également facilitée.
-
-```js
-// add delay
-const myBox = document.querySelector(".js-box");
-
-gsap.to(myBox, {
-  x: 100,
-  ease: "elastic. out(1, 0.2)",
-  duration: 0.5,
-  delay: 1,
-});
-```
-
-Si vous avez plsusieurs éléments à animer, la fonction `stagger` est très pratique.
-
-```js
-// stagger
-const myBoxes = document.querySelectorAll(".js-box");
-
-// using stagger
-gsap.to(myBoxes, {
-  stagger: 0.1,
-  rotation: 180,
-  x: 200,
-});
-```
-
-### Timeline avec GSAP
-
-L'un des avantages centraux de GSAP est que cette librairie vous permet facilement de gérer des animations complexes grâce à un concept de timeline. Modifier les timings d'une animation complexe avec des éléments en successions et survenant en même temps devient un exercice relativement simple.
-
-```js
-const myBox = document.querySelector(".js-box");
-
-// simple timeline with parameters
-let tl = gsap.timeline({ repeat: -1, yoyo: true });
-tl.pause();
-
-tl.to(myBox, {
-  x: 200,
-  duration: 0.5,
-});
-
-tl.to(myBox, {
-  backgroundColor: "blue",
-  rotation: 360,
-  duration: 0.1,
-  repeat: 5,
-});
-
-tl.to(myBox, {
-  y: 200,
-  duration: 1,
-});
-
-tl.to(myBox, {
-  backgroundColor: "green",
-  x: 0,
-  duration: 0.2,
-});
-
-tl.to(
-  myBox,
-  {
-    backgroundColor: "red",
-    y: 0,
-    duration: 0.25,
-  },
-  "-=0.2"
-);
-
-tl.play();
-```
-
-Les timelines peuvent aussi être utilisées de façon impriquées pour avoir un meilleur contrôle de vos animation et en nommer les différentes parties.
-
-```js
-// Self invoking function
-// Avoid variables collisions by scoping them
-(function () {
-  // nested timelines
-  // better for composing complex animations and overlap
-  const myBox = document.querySelector(".js-box");
-
-  function one() {
-    let tl = gsap.timeline();
-    tl.to(myBox, { x: 200, duration: 1, delay: 1 });
-    return tl;
-  }
-
-  function two() {
-    let tl = gsap.timeline();
-    tl.to(myBox, {
-      backgroundColor: "blue",
-      rotation: 360,
-      duration: 0.5,
-      repeat: 3,
-    });
-    return tl;
-  }
-
-  function three() {
-    let tl = gsap.timeline();
-    tl.to(myBox, {
-      y: 200,
-      duration: 1,
-    });
-    return tl;
-  }
-
-  function four() {
-    let tl = gsap.timeline();
-    tl.to(myBox, {
-      backgroundColor: "green",
-      x: 0,
-      duration: 0.25,
-    });
-    return tl;
-  }
-
-  function five() {
-    let tl = gsap.timeline();
-    tl.to(myBox, {
-      backgroundColor: "red",
-      y: 0,
-      duration: 1,
-    });
-    return tl;
-  }
-
-  let master = gsap.timeline();
-  master.pause();
-  master
-    .add(one())
-    .add(two(), "+=2")
-    .add(three(), "-=1")
-    .add(four())
-    .add(five());
-  master.play();
-})();
-```
-
-Voici un [exemple plus abouti](https://github.com/jeromecoupe/web_animations_demo) utilisant des timelines imbriquées pour gérer efficacement les diverses parties d'une animation complexe.
+Des librairies telles que [GSAP de Greensock](https://greensock.com/gsap) offrent une grande facilité d'utilisation et permettent de créer des animations complexes avec SVG, HTML ou Canvas. Ces librairies sont extérieures aux navigateurs mais offrent une grande palette de possibilités aux dévelopeurs. En voici un petit [exemple avec un formulaire de login](https://github.com/jeromecoupe/web_animations_demo) utilisant des timelines imbriquées pour gérer efficacement les diverses parties d'une animation complexe.
 
 _Exercice: décortiquer ensemble le script et voir comment les choses fonctionnent_
 
@@ -1058,15 +774,16 @@ Il est imprtant de bien spécifier certaines choses dans le HTML pour optimiser 
   width="800"
   height="800"
   decoding="async"
-  loading="lazy" />
+  loading="lazy"
+/>
 ```
 
-Quelques lignes de CSS suffisent ensuite à ce que les images prennent au maximum tout l’espace disponible dans leur bloc conteneur. C’est donc la taille du bloc conteneur qui va définir la taille de l’image.
+Quelques lignes de CSS suffisent ensuite à ce que les images prennent au maximum tout l’espace disponible dans leur bloc conteneur. C’est donc la taille du bloc conteneur qui va définir la largeur maximale de l’image.
 
 ```css
 .o-fluidimage {
   display: block;
-  max-width: 100%;
+  max-inline-size: 100%;
   height: auto;
 }
 ```
@@ -1075,7 +792,7 @@ Ceci fonctionne tant que vous images restent toujours plus grandes que leurs blo
 
 ```css
 .o-fluidimage--full {
-  width: 100%;
+  inline-size: 100%;
 }
 ```
 
@@ -1133,28 +850,44 @@ Ces attributs sont suffisants si vous ne devez pas prendre en compte de différe
 
 **Différentes tailles d'images:**
 
+Voici un exemple pour une bannière.
+
 ```html
 <img
   src="small.jpg"
-  srcset="large.jpg 1024w, medium.jpg 640w, small.jpg 320w"
-  sizes="(min-width: 750px) 33.3vw,
-            100vw"
-  width="1024"
-  height="768"
-  loading="lazy"
+  srcset="large.jpg 1500w, medium.jpg 1024w, small.jpg 800w"
+  sizes="(min-width: 1500px) 1440px,
+         100vw"
+  width="1500"
+  height="844"
   decoding="async"
-  alt="alternative representation" />
+  alt="alternative representation"
+/>
+```
+
+Voici un exemple pour une image avec un attribut `loading="lazy"`.
+
+```html
+<img
+  src="small.jpg"
+  srcset="large.jpg 1500w, medium.jpg 1024w, small.jpg 800w"
+  sizes="auto"
+  width="1500"
+  height="844"
+  decoding="async"
+  alt="alternative representation"
+/>
 ```
 
 - `src` valeur par défaut pour les navigateurs ne supportant pas `srcset`. C'est la valeur de cette propriété de le navigateur va venir changer en fonction des informations passées pa `srcset` (images disponibles et taille) et pas `sizes` (information relatives à l'affichage).
 - `srcset` spécifie différentes images et la largeur de chacune d'entre-elles. Les valeurs pour `w` font référence à la taille actuelle de l'image en pixels.
-- `sizes` spécifie la largeur de l'image par rapport au viewport pour chacune des media-queries spécifiées dans les paires media query / valeur. La dernière valeur est une valeur par défaut.
+- `sizes` spécifie la largeur de l'image par rapport au viewport pour chacune des media-queries spécifiées dans les paires media query / valeur. La dernière valeur est une valeur par défaut. Une valeur `size="auto"` doit être utilisée dès que l'attribut `loading="lazy"` est présente.
 
 Ces informations permettent aux navigateurs de choisir l'image adéquate en fonction à la fois de la taille d'affichage de l'image et de la densité de l'écran sur lequel elle est affichée.
 
 Les attributs `loading` et `decoding` sont utiles pour la performance.
 
-- `loading="lazy"`: donne l'instruction au navigateur de ne charger les images que lorsqu'elles sont afficher dans le viewport du navigateur. Attention à n'utiliser cet attribut que pour des images ou des iframe qui sont affichées hors écran.
+- `loading="lazy"`: donne l'instruction au navigateur de ne charger les images que lorsqu'elles sont afficher dans le viewport du navigateur. Attention à ne pas utiliser cet attribut si l'image n'est pas susceptible d'être affichée dans le viewport lors du chargement de la page.
 - `decoding="async"`: donne l'instruction au navigateur de continuer à charger le contenu de la page, même si l'image n'est pas encore tout à fait chargée.
 
 #### `<picture>` et art direction
@@ -1163,14 +896,13 @@ Si vous devez servir des images différentes sur le plan de la composition (cadr
 
 ```html
 <picture>
-  <source
-    media="(min-width: 1024px)"
-    srcset="obama-fullshot.jpg" />
+  <source media="(min-width: 1024px)" srcset="obama-fullshot.jpg" />
   <img
     src="obama-closeup.jpg"
     loading="lazy"
     decoding="async"
-    alt="Obama seals the deal" />
+    alt="Obama seals the deal"
+  />
 </picture>
 ```
 
@@ -1181,19 +913,22 @@ Notez bien que `<picture>`, `<source>`, `srcset` et `sizes` peuvent être combin
   <source
     media="(min-width: 750px)"
     srcset="large.jpg 1024w, medium.jpg 640w, small.jpg 320w"
-    sizes="33.3vw" />
+    sizes="33.3vw"
+  />
   <source
     srcset="
       large-cropped.jpg  1024w,
       medium-cropped.jpg  640w,
       small-cropped.jpg   320w
     "
-    sizes="100vw" />
+    sizes="100vw"
+  />
   <img
     src="small-cropped.jpg"
     loading="lazy"
     decoding="async"
-    alt="alternative representation" />
+    alt="alternative representation"
+  />
 </picture>
 ```
 
@@ -1215,14 +950,14 @@ Il est également possible d’intégrer des vidéos à vos pages de façon flui
 ```css
 .fluidvideo {
   aspect-ratio: 16 / 9;
-  max-width: 100%;
+  max-inline-size: 100%;
   height: auto;
 }
 ```
 
 Afin de servir des videos adaptées à tous les terminaux, que ce soit sur le plan des formats ou de la taille d'affichage, des services tels que Youtube et Vimeo sont intéressants et très utilisés.
 
-La propriété CSS [`aspect-ratio`](https://developer.mozilla.org/fr/docs/Web/CSS/aspect-ratio) permet d'utiliser un code simple suivant le ratio de votre video.
+La propriété CSS [`aspect-ratio`](https://developer.mozilla.org/fr/docs/Web/CSS/aspect-ratio) permet d'utiliser un code efficace suivant le ratio d'affichage souhaité de votre video.
 
 ```css
 .video-container {
@@ -1230,15 +965,11 @@ La propriété CSS [`aspect-ratio`](https://developer.mozilla.org/fr/docs/Web/CS
   background-color: black;
 
   & > iframe {
-    width: 100%;
-    height: 100%;
+    inline-size: 100%;
+    blok-size: 100%;
   }
 }
 ```
-
-## Grilles complexes
-
-@TODO
 
 ## Ressources
 
