@@ -865,20 +865,6 @@ Voici un exemple pour une bannière.
 />
 ```
 
-Voici un exemple pour une image avec un attribut `loading="lazy"`.
-
-```html
-<img
-  src="small.jpg"
-  srcset="large.jpg 1500w, medium.jpg 1024w, small.jpg 800w"
-  sizes="auto"
-  width="1500"
-  height="844"
-  decoding="async"
-  alt="alternative representation"
-/>
-```
-
 - `src` valeur par défaut pour les navigateurs ne supportant pas `srcset`. C'est la valeur de cette propriété de le navigateur va venir changer en fonction des informations passées pa `srcset` (images disponibles et taille) et pas `sizes` (information relatives à l'affichage).
 - `srcset` spécifie différentes images et la largeur de chacune d'entre-elles. Les valeurs pour `w` font référence à la taille actuelle de l'image en pixels.
 - `sizes` spécifie la largeur de l'image par rapport au viewport pour chacune des media-queries spécifiées dans les paires media query / valeur. La dernière valeur est une valeur par défaut. Une valeur `size="auto"` doit être utilisée dès que l'attribut `loading="lazy"` est présente.
@@ -889,6 +875,21 @@ Les attributs `loading` et `decoding` sont utiles pour la performance.
 
 - `loading="lazy"`: donne l'instruction au navigateur de ne charger les images que lorsqu'elles sont afficher dans le viewport du navigateur. Attention à ne pas utiliser cet attribut si l'image n'est pas susceptible d'être affichée dans le viewport lors du chargement de la page.
 - `decoding="async"`: donne l'instruction au navigateur de continuer à charger le contenu de la page, même si l'image n'est pas encore tout à fait chargée.
+
+Dès que vous avez un attribut `loading` spécifié comme `lazy` vous pouvez simplifier la valeur de l'attribut `size` et la mettre simplement à `auto`
+
+```html
+<img
+  src="small.jpg"
+  srcset="large.jpg 1500w, medium.jpg 1024w, small.jpg 800w"
+  sizes="auto"
+  width="1500"
+  height="844"
+  loading="lazy"
+  decoding="async"
+  alt="alternative representation"
+/>
+```
 
 #### `<picture>` et art direction
 
