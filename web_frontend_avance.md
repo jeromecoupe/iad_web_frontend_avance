@@ -964,7 +964,7 @@ La propriété CSS [`aspect-ratio`](https://developer.mozilla.org/fr/docs/Web/CS
 <iframe
   src="https://www.youtube-nocookie.com/embed/knKfafBxTVM?si=xlVpi5ubqilz2lft"
   class="fluidvideo"
-  title="Olympiaddes 2026"
+  title="Olympiades 2026"
   loading="lazy"
 >
 </iframe>
