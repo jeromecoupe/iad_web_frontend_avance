@@ -967,7 +967,7 @@ La propriété CSS [`aspect-ratio`](https://developer.mozilla.org/fr/docs/Web/CS
 
   & > iframe {
     inline-size: 100%;
-    blok-size: 100%;
+    block-size: 100%;
   }
 }
 ```
