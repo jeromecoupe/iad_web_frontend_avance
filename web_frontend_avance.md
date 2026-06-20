@@ -960,15 +960,23 @@ Afin de servir des videos adaptées à tous les terminaux, que ce soit sur le pl
 
 La propriété CSS [`aspect-ratio`](https://developer.mozilla.org/fr/docs/Web/CSS/aspect-ratio) permet d'utiliser un code efficace suivant le ratio d'affichage souhaité de votre video.
 
-```css
-.video-container {
-  aspect-ratio: 16 / 9;
-  background-color: black;
+```html
+<iframe
+  src="https://www.youtube-nocookie.com/embed/knKfafBxTVM?si=xlVpi5ubqilz2lft"
+  class="fluidvideo"
+  title="Olympiaddes 2026"
+  loading="lazy"
+>
+</iframe>
+```
 
-  & > iframe {
-    inline-size: 100%;
-    block-size: 100%;
-  }
+```css
+.fluidvideo {
+  border: none;
+  aspect-ratio: 16 / 9;
+  inline-size: 100%;
+  block-size: auto;
+  background: black;
 }
 ```
 
